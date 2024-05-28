@@ -10,6 +10,8 @@ import router from "./router";
 
 config({ path: `${__dirname}/.env` });
 
+console.log(new Date());
+
 const app = express();
 app.use(
   cors({
@@ -27,10 +29,8 @@ server.listen(process.env.PORT || 8080, () => {
   console.log(`server running`);
 });
 
-const MONGO_URL = process.env.CONNECTION_STRING;
-
 mongoose.Promise = Promise;
-mongoose.connect(MONGO_URL);
+mongoose.connect(process.env.CONNECTION_STRING);
 mongoose.connection.on("error", (err: Error) => {
   console.log("err: ", err);
 });

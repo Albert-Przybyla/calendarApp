@@ -8,7 +8,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import router from "./router";
 
-import swaggerDocs from "./utils/swaggier";
+import swaggerDocs from "./utils/swagger";
 
 config({ path: `${__dirname}/.env` });
 

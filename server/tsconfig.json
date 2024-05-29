@@ -6,5 +6,5 @@
     "sourceMap": true,
     "noImplicitAny": true
   },
-  "include": ["src/**/*", "src/utils/swaggier.ts"]
+  "include": ["src/**/*", "src/utils/swagger.ts"]
 }

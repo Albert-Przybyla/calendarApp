@@ -1,0 +1,60 @@
+/auth/register:
+  post:
+    tags:
+      - Auth Controller
+    summary: Create a user
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - username
+              - email
+              - password
+            properties:
+              username:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+    responses:
+      200:
+        description: Created
+      409:
+        description: Conflict
+      400:
+        description: Data Error
+      500:
+        description: Data Error
+
+/auth/login:
+  post:
+    tags:
+      - Auth Controller
+    summary: login to application
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+    responses:
+      200:
+        description: token
+      403:
+        description: Bad Password or email
+      400:
+        description: Data Error
+      500:
+        description: Data Error

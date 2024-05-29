@@ -1,0 +1,56 @@
+/users:
+  get:
+    tags:
+      - User Controller
+    summary: Get a list of users
+    description: Retrieve a list of users from the database.
+    responses:
+      200:
+        description: Successful response with a list of users.
+      403:
+        description: unautorized
+      500:
+        description: Server error
+  delete:
+    tags:
+      - User Controller
+    summary: Delete user
+    description: Deelet user by specific id.
+    parameters:
+      - in: path
+        name: id
+        required: true
+    responses:
+      200:
+        description: Successful deleted user.
+      403:
+        description: unautorized
+      500:
+        description: Server error
+  put:
+    tags:
+      - User Controller
+    summary: Update user
+    description: Update user by specific id.
+    parameters:
+      - in: path
+        name: id
+        required: true
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - username
+            properties:
+              username:
+                type: string
+    responses:
+      200:
+        description: Successful deleted user.
+      403:
+        description: unautorized
+      500:
+        description: Server error

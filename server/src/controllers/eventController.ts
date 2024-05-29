@@ -4,7 +4,7 @@ import { get } from "lodash";
 
 export const createEventReq = async (req: express.Request, res: express.Response) => {
   try {
-    const { name, description, start, end } = req.body;
+    const { name, description, start, end, calendarId } = req.body;
     if (!name || !start || !end) {
       return res.sendStatus(400);
     }
@@ -18,6 +18,7 @@ export const createEventReq = async (req: express.Request, res: express.Response
       start,
       end,
       ownerId: currentUserId.toString(),
+      calendarId,
     });
     return res.status(200).json(Event).end();
   } catch (err) {
@@ -29,7 +30,7 @@ export const createEventReq = async (req: express.Request, res: express.Response
 export const updateEventReq = async (req: express.Request, res: express.Response) => {
   try {
     const { id } = req.params;
-    const { name, description, start, end } = req.body;
+    const { name, description, start, end, calendarId } = req.body;
     if (!name || !start || !end) {
       return res.sendStatus(400);
     }
@@ -45,6 +46,7 @@ export const updateEventReq = async (req: express.Request, res: express.Response
     Event.description = description;
     Event.start = start;
     Event.end = end;
+    Event.calendarId = calendarId;
     await Event.save();
     return res.status(200).json(Event).end();
   } catch (err) {

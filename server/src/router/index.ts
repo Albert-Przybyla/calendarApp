@@ -3,6 +3,7 @@ import authenticationRouter from "./authenticationRouter";
 import userRouter from "./userRouter";
 import typicalEventRouter from "./typicalEventRouter";
 import eventRouter from "./eventRouter";
+import caldendarRouter from "./caldendarRouter";
 
 const router = express.Router();
 
@@ -11,5 +12,6 @@ export default (): express.Router => {
   userRouter(router);
   typicalEventRouter(router);
   eventRouter(router);
+  caldendarRouter(router);
   return router;
 };

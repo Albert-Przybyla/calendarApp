@@ -6,6 +6,7 @@ const EventSchema = new mongoose.Schema({
   start: { type: Date, required: true },
   end: { type: Date, required: true },
   ownerId: { type: String, required: true },
+  calendarId: { type: String, required: false },
 });
 
 export const EventModule = mongoose.model("Event", EventSchema);

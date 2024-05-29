@@ -4,7 +4,7 @@ import { get } from "lodash";
 
 export const createTypicalEventReq = async (req: express.Request, res: express.Response) => {
   try {
-    const { name, description, duration } = req.body;
+    const { name, description, duration, calendarId } = req.body;
     if (!name || !duration) {
       return res.sendStatus(400);
     }
@@ -17,6 +17,7 @@ export const createTypicalEventReq = async (req: express.Request, res: express.R
       description,
       duration,
       ownerId: currentUserId.toString(),
+      calendarId,
     });
     return res.status(200).json(typicalEvent).end();
   } catch (err) {
@@ -28,7 +29,7 @@ export const createTypicalEventReq = async (req: express.Request, res: express.R
 export const updateTypicalEventReq = async (req: express.Request, res: express.Response) => {
   try {
     const { id } = req.params;
-    const { name, description, duration } = req.body;
+    const { name, description, duration, calendarId } = req.body;
     if (!name || !duration) {
       return res.sendStatus(400);
     }
@@ -43,6 +44,7 @@ export const updateTypicalEventReq = async (req: express.Request, res: express.R
     typicalEvent.name = name;
     typicalEvent.description = description;
     typicalEvent.duration = duration;
+    typicalEvent.calendarId = calendarId;
     await typicalEvent.save();
     return res.status(200).json(typicalEvent).end();
   } catch (err) {

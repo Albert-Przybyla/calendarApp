@@ -5,6 +5,7 @@ const TypicalEventSchema = new mongoose.Schema({
   description: { type: String, required: false },
   duration: { type: Number, required: true },
   ownerId: { type: String, required: true },
+  calendarId: { type: String, required: false },
 });
 
 export const TypicalEventModule = mongoose.model("TypicalEvent", TypicalEventSchema);

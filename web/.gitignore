@@ -44,3 +44,7 @@ Thumbs.db
 
 # Generated data
 api-client
+
+# Generated apps
+
+app-darwin-arm64

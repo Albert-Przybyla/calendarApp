@@ -1,13 +1,16 @@
 {
   "name": "web",
   "version": "0.0.0",
+  "main": "app.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "api": "openapi-generator-cli generate -i http://localhost:8080/docs.json -g typescript-angular --additional-properties=serviceSuffix=ClientService -o api-client"
+    "api": "openapi-generator-cli generate -i http://localhost:8080/docs.json -g typescript-angular --additional-properties=serviceSuffix=ClientService -o api-client",
+    "electron": "electron .",
+    "electron-build": "ng build && electron ."
   },
   "private": true,
   "dependencies": {
@@ -19,6 +22,8 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "electron": "^30.0.8",
+    "electron-packager": "^17.1.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

@@ -34,7 +34,7 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
   if (!token) {
     return res.sendStatus(401);
   }
-  verify(token, process.env.ACCESS_TOKEN, (err, data) => {
+  verify(token, process.env.ACCESS_TOKEN, { ignoreExpiration: false }, (err, data) => {
     if (err) {
       return res.sendStatus(401);
     }

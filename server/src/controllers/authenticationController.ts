@@ -23,7 +23,7 @@ export const login = async (req: Request, res: Response) => {
       username: user.username,
       email: user.email,
     };
-    const token = sign(payload, process.env.ACCESS_TOKEN);
+    const token = sign(payload, process.env.ACCESS_TOKEN, { expiresIn: "1h" });
     return res.json({ token: token });
   } catch (err) {
     console.error(err);

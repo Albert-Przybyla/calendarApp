@@ -14,14 +14,14 @@ export class AuthService {
 
   public loginUser(
     login: AuthLoginPostRequest,
-    onLogin: (token: any) => void,
+    onLogin: () => void,
     onError: (e: Error) => void
   ) {
     this._auth.authLoginPost(login).subscribe({
       next: (v) => {
         const token = v.token;
         this.setToken(token!);
-        onLogin(token);
+        onLogin();
       },
       error: (e) => {
         onError(e);
@@ -39,8 +39,7 @@ export class AuthService {
 
   public getToken(): string | null {
     let token = localStorage.getItem(TOKEN_KEY);
-    if (this.isTokenValid(token!)) return token;
-    this.logout();
+    if (token) if (this.isTokenValid(token!)) return token;
     return null;
   }
 

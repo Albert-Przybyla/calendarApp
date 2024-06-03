@@ -1,14 +1,14 @@
 import { createEvent, getEventById, getEventsForUser } from "../db/event";
-import express from "express";
+import { Request, Response } from "express";
 import { get } from "lodash";
 
-export const createEventReq = async (req: express.Request, res: express.Response) => {
+export const createEventReq = async (req: Request, res: Response) => {
   try {
     const { name, description, start, end, calendarId } = req.body;
     if (!name || !start || !end) {
       return res.sendStatus(400);
     }
-    const currentUserId = get(req, "identity._id") as String;
+    const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
@@ -17,7 +17,7 @@ export const createEventReq = async (req: express.Request, res: express.Response
       description,
       start,
       end,
-      ownerId: currentUserId.toString(),
+      ownerId: currentUserId,
       calendarId,
     });
     return res.status(200).json(Event).end();
@@ -27,19 +27,19 @@ export const createEventReq = async (req: express.Request, res: express.Response
   }
 };
 
-export const updateEventReq = async (req: express.Request, res: express.Response) => {
+export const updateEventReq = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { name, description, start, end, calendarId } = req.body;
     if (!name || !start || !end) {
       return res.sendStatus(400);
     }
-    const currentUserId = get(req, "identity._id") as String;
+    const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
     const Event = await getEventById(id);
-    if (Event.ownerId !== currentUserId.toString()) {
+    if (Event.ownerId !== currentUserId) {
       return res.sendStatus(404);
     }
     Event.name = name;
@@ -55,13 +55,13 @@ export const updateEventReq = async (req: express.Request, res: express.Response
   }
 };
 
-export const getEventsForUserReq = async (req: express.Request, res: express.Response) => {
+export const getEventsForUserReq = async (req: Request, res: Response) => {
   try {
-    const currentUserId = get(req, "identity._id") as String;
+    const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
-    const Events = await getEventsForUser(currentUserId.toString());
+    const Events = await getEventsForUser(currentUserId);
     return res.status(200).json(Events);
   } catch (err) {
     console.error(err);

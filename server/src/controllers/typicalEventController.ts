@@ -1,14 +1,14 @@
 import { createTypicalEvent, getTypicalEventById, getTypicalEventsForUser } from "../db/typical_event";
-import express from "express";
+import { Request, Response } from "express";
 import { get } from "lodash";
 
-export const createTypicalEventReq = async (req: express.Request, res: express.Response) => {
+export const createTypicalEventReq = async (req: Request, res: Response) => {
   try {
     const { name, description, duration, calendarId } = req.body;
     if (!name || !duration) {
       return res.sendStatus(400);
     }
-    const currentUserId = get(req, "identity._id") as String;
+    const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
@@ -16,7 +16,7 @@ export const createTypicalEventReq = async (req: express.Request, res: express.R
       name,
       description,
       duration,
-      ownerId: currentUserId.toString(),
+      ownerId: currentUserId,
       calendarId,
     });
     return res.status(200).json(typicalEvent).end();
@@ -26,19 +26,19 @@ export const createTypicalEventReq = async (req: express.Request, res: express.R
   }
 };
 
-export const updateTypicalEventReq = async (req: express.Request, res: express.Response) => {
+export const updateTypicalEventReq = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { name, description, duration, calendarId } = req.body;
     if (!name || !duration) {
       return res.sendStatus(400);
     }
-    const currentUserId = get(req, "identity._id") as String;
+    const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
     const typicalEvent = await getTypicalEventById(id);
-    if (typicalEvent.ownerId !== currentUserId.toString()) {
+    if (typicalEvent.ownerId !== currentUserId) {
       return res.sendStatus(404);
     }
     typicalEvent.name = name;
@@ -53,13 +53,13 @@ export const updateTypicalEventReq = async (req: express.Request, res: express.R
   }
 };
 
-export const getTypicalEventsForUserReq = async (req: express.Request, res: express.Response) => {
+export const getTypicalEventsForUserReq = async (req: Request, res: Response) => {
   try {
-    const currentUserId = get(req, "identity._id") as String;
+    const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
-    const typicalEvents = await getTypicalEventsForUser(currentUserId.toString());
+    const typicalEvents = await getTypicalEventsForUser(currentUserId);
     return res.status(200).json(typicalEvents);
   } catch (err) {
     console.error(err);

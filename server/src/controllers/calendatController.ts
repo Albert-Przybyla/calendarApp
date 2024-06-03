@@ -1,14 +1,14 @@
 import { createCalendar, getCalendarById, getCalendarsForUser } from "../db/calendar";
-import express from "express";
+import { Request, Response } from "express";
 import { get } from "lodash";
 
-export const createCalendarReq = async (req: express.Request, res: express.Response) => {
+export const createCalendarReq = async (req: Request, res: Response) => {
   try {
     const { name, color } = req.body;
     if (!name || !color) {
       return res.sendStatus(400);
     }
-    const currentUserId = get(req, "identity._id") as String;
+    const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
@@ -24,19 +24,19 @@ export const createCalendarReq = async (req: express.Request, res: express.Respo
   }
 };
 
-export const updateCalendarReq = async (req: express.Request, res: express.Response) => {
+export const updateCalendarReq = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { name, color } = req.body;
     if (!name || !color) {
       return res.sendStatus(400);
     }
-    const currentUserId = get(req, "identity._id") as String;
+    const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
     const Caldendar = await getCalendarById(id);
-    if (Caldendar.ownerId !== currentUserId.toString()) {
+    if (Caldendar.ownerId !== currentUserId) {
       return res.sendStatus(404);
     }
     Caldendar.name = name;
@@ -49,13 +49,13 @@ export const updateCalendarReq = async (req: express.Request, res: express.Respo
   }
 };
 
-export const getCaldendarsForUserReq = async (req: express.Request, res: express.Response) => {
+export const getCaldendarsForUserReq = async (req: Request, res: Response) => {
   try {
-    const currentUserId = get(req, "identity._id") as String;
+    const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
-    const Caldendars = await getCalendarsForUser(currentUserId.toString());
+    const Caldendars = await getCalendarsForUser(currentUserId);
     return res.status(200).json(Caldendars);
   } catch (err) {
     console.error(err);

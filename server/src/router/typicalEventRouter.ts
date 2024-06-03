@@ -1,4 +1,8 @@
-import { createTypicalEventReq, getTypicalEventsForUserReq, updateTypicalEventReq } from "../controllers/typicalEventController";
+import {
+  createTypicalEventReq,
+  getTypicalEventsForUserReq,
+  updateTypicalEventReq,
+} from "../controllers/typicalEventController";
 import { isAuthenticated, isOwner } from "../middlewares";
 import express from "express";
 

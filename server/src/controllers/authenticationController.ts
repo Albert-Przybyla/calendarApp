@@ -1,8 +1,10 @@
-import express from "express";
+import { Request, Response } from "express";
 import { createUser, getUserByEmail } from "../db/user";
 import { authenticaion, random } from "../helpers";
+import { sign } from "jsonwebtoken";
+import { UserData } from "models/user";
 
-export const login = async (req: express.Request, res: express.Response) => {
+export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -10,28 +12,26 @@ export const login = async (req: express.Request, res: express.Response) => {
     }
     const user = await getUserByEmail(email).select("+authenticaion.salt +authenticaion.password");
     if (!user) {
-      return res.sendStatus(400);
+      return res.sendStatus(401);
     }
     const expectedHash = authenticaion(user.authenticaion.salt, password);
     if (user.authenticaion.password != expectedHash) {
-      return res.sendStatus(403);
+      return res.sendStatus(401);
     }
-    const salt = random();
-    user.authenticaion.sessionToken = authenticaion(salt, user._id.toString());
-    await user.save();
-    res.cookie(process.env.TOKEN || "TOKEN", user.authenticaion.sessionToken, {
-      domain: "localhost",
-      path: "/",
-    });
-
-    return res.status(200).json(user).end();
+    const payload: UserData = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    };
+    const token = sign(payload, process.env.ACCESS_TOKEN);
+    return res.json({ token: token });
   } catch (err) {
     console.error(err);
     return res.sendStatus(400);
   }
 };
 
-export const register = async (req: express.Request, res: express.Response) => {
+export const register = async (req: Request, res: Response) => {
   try {
     const { email, password, username } = req.body;
     if (!email || !password || !username) {

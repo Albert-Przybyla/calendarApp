@@ -1,17 +1,26 @@
-import express from "express";
+import { Request, Response, NextFunction } from "express";
 import { get, identity, merge } from "lodash";
 
 import { getUserBySessionToken } from "../db/user";
+import { verify } from "jsonwebtoken";
+import { UserData } from "models/user";
 
-export const isOwner = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+declare global {
+  namespace Express {
+    interface Request {
+      user: UserData;
+    }
+  }
+}
+
+export const isOwner = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const currentUserId = (get(req, "identity._id") as String).toString();
-    if (!currentUserId) {
-      return res.sendStatus(403);
+    if (!req.user || !req.user.id) {
+      return res.sendStatus(401);
     }
-    if (currentUserId != id) {
-      return res.sendStatus(403);
+    if (req.user.id != id) {
+      return res.sendStatus(401);
     }
     next();
   } catch (err) {
@@ -20,24 +29,16 @@ export const isOwner = async (req: express.Request, res: express.Response, next:
   }
 };
 
-export const isAuthenticated = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
-  try {
-    const sessionToken = req.cookies[process.env.TOKEN || "TOKEN"];
-    if (!sessionToken) {
-      return res.sendStatus(403);
-    }
-    const existingUser = await getUserBySessionToken(sessionToken);
-    if (!existingUser) {
-      return res.sendStatus(403);
-    }
-    merge(req, { identity: existingUser });
-    return next();
-  } catch (err) {
-    console.error(err);
-    return res.sendStatus(400);
+export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) {
+    return res.sendStatus(401);
   }
+  verify(token, process.env.ACCESS_TOKEN, (err, data) => {
+    if (err) {
+      return res.sendStatus(401);
+    }
+    req.user = data as UserData;
+    next();
+  });
 };

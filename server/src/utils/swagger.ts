@@ -21,6 +21,20 @@ const options = {
         url: `http://localhost:${PORT}`,
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: "*",
+      },
+    ],
   },
   apis: ["./src/router/docs/*.yaml"],
 };

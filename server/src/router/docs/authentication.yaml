@@ -1,60 +1,94 @@
-/auth/register:
-  post:
-    tags:
-      - Auth Controller
-    summary: Create a user
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-              - username
-              - email
-              - password
-            properties:
-              username:
-                type: string
-              email:
-                type: string
-              password:
-                type: string
-    responses:
-      200:
-        description: Created
-      409:
-        description: Conflict
-      400:
-        description: Data Error
-      500:
-        description: Data Error
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth Controller
+      summary: Register a new user
+      description: Create a new user account in the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - email
+                - password
+              properties:
+                username:
+                  type: string
+                  description: The username of the new user.
+                email:
+                  type: string
+                  format: email
+                  description: The email address of the new user.
+                password:
+                  type: string
+                  format: password
+                  description: The password for the new user account.
+      responses:
+        200:
+          description: Successfully created a new user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the new user.
+                  username:
+                    type: string
+                    description: The username of the new user.
+                  email:
+                    type: string
+                    description: The email address of the new user.
+        409:
+          description: Conflict. The username or email already exists.
+        400:
+          description: Data Error. Invalid input data.
+        500:
+          description: Server Error. An error occurred on the server.
 
-/auth/login:
-  post:
-    tags:
-      - Auth Controller
-    summary: login to application
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-              - email
-              - password
-            properties:
-              email:
-                type: string
-              password:
-                type: string
-    responses:
-      200:
-        description: token
-      403:
-        description: Bad Password or email
-      400:
-        description: Data Error
-      500:
-        description: Data Error
+  /auth/login:
+    post:
+      tags:
+        - Auth Controller
+      summary: Log in to the application
+      description: Authenticate a user and return a JWT token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: The email address of the user.
+                password:
+                  type: string
+                  format: password
+                  description: The password of the user.
+      responses:
+        200:
+          description: Successfully authenticated the user and returned a JWT token.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: The JWT token for authenticated access.
+        403:
+          description: Unauthorized. Incorrect email or password.
+        400:
+          description: Data Error. Invalid input data.
+        500:
+          description: Server Error. An error occurred on the server.

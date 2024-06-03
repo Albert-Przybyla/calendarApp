@@ -1,116 +1,12 @@
-/event:
-  post:
-    tags:
-      - Event controller
-    summary: Create new event
-    description: create.
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-              - name
-              - description
-              - start
-              - end
-              - calendarId
-            properties:
-              name:
-                type: string
-              description:
-                type: string
-              start:
-                type: string
-              end:
-                type: string
-              calendarId:
-                type: string
-    responses:
-      200:
-        description: Successful response.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                description:
-                  type: string
-                start:
-                  type: string
-                end:
-                  type: string
-                calendarId:
-                  type: string
-
-      403:
-        description: unautorized
-      500:
-        description: Server error
-  get:
-    tags:
-      - Event controller
-    summary: get calendars
-    description: Retrieve a list of Events from the database.
-    responses:
-      200:
-        description: Successful response with a list of users.
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  start:
-                    type: string
-                  end:
-                    type: string
-                  calendarId:
-                    type: string
-
-      403:
-        description: unautorized
-      500:
-        description: Server error
-
-  put:
-    tags:
-      - Event controller
-    summary: Update event
-    description: update.
-    parameters:
-      - in: path
-        name: id
+paths:
+  /event:
+    post:
+      tags:
+        - Event controller
+      summary: Create a new event
+      description: Create a new event in the specified calendar.
+      requestBody:
         required: true
-        schema:
-          type: string
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-              - name
-              - color
-            properties:
-              name:
-                type: string
-              color:
-                type: string
-    responses:
-      200:
-        description: Successful response.
         content:
           application/json:
             schema:
@@ -124,16 +20,166 @@
               properties:
                 name:
                   type: string
+                  description: The name of the event.
                 description:
                   type: string
+                  description: The description of the event.
                 start:
                   type: string
+                  format: date-time
+                  description: The start date and time of the event.
                 end:
                   type: string
+                  format: date-time
+                  description: The end date and time of the event.
                 calendarId:
                   type: string
+                  description: The ID of the calendar to which the event belongs.
+      responses:
+        200:
+          description: Successfully created a new event.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the event.
+                  name:
+                    type: string
+                    description: The name of the event.
+                  description:
+                    type: string
+                    description: The description of the event.
+                  start:
+                    type: string
+                    format: date-time
+                    description: The start date and time of the event.
+                  end:
+                    type: string
+                    format: date-time
+                    description: The end date and time of the event.
+                  calendarId:
+                    type: string
+                    description: The ID of the calendar to which the event belongs.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        500:
+          description: Server error. An error occurred on the server.
 
-      403:
-        description: unautorized
-      500:
-        description: Server error
+    get:
+      tags:
+        - Event controller
+      summary: Retrieve a list of events
+      description: Retrieve a list of all events from the database.
+      responses:
+        200:
+          description: Successfully retrieved the list of events.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The unique identifier of the event.
+                    name:
+                      type: string
+                      description: The name of the event.
+                    description:
+                      type: string
+                      description: The description of the event.
+                    start:
+                      type: string
+                      format: date-time
+                      description: The start date and time of the event.
+                    end:
+                      type: string
+                      format: date-time
+                      description: The end date and time of the event.
+                    calendarId:
+                      type: string
+                      description: The ID of the calendar to which the event belongs.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        500:
+          description: Server error. An error occurred on the server.
+
+  /event/{id}:
+    put:
+      tags:
+        - Event controller
+      summary: Update an event
+      description: Update an existing event by ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            description: The ID of the event to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+                - start
+                - end
+                - calendarId
+              properties:
+                name:
+                  type: string
+                  description: The name of the event.
+                description:
+                  type: string
+                  description: The description of the event.
+                start:
+                  type: string
+                  format: date-time
+                  description: The start date and time of the event.
+                end:
+                  type: string
+                  format: date-time
+                  description: The end date and time of the event.
+                calendarId:
+                  type: string
+                  description: The ID of the calendar to which the event belongs.
+      responses:
+        200:
+          description: Successfully updated the event.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the event.
+                  name:
+                    type: string
+                    description: The name of the event.
+                  description:
+                    type: string
+                    description: The description of the event.
+                  start:
+                    type: string
+                    format: date-time
+                    description: The start date and time of the event.
+                  end:
+                    type: string
+                    format: date-time
+                    description: The end date and time of the event.
+                  calendarId:
+                    type: string
+                    description: The ID of the calendar to which the event belongs.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        500:
+          description: Server error. An error occurred on the server.

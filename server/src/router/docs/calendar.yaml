@@ -1,116 +1,133 @@
-/calendar:
-  post:
-    tags:
-      - Calednar controller
-    summary: Create new calendar
-    description: create.
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-              - name
-              - color
-            properties:
-              name:
-                type: string
-              color:
-                type: string
-    responses:
-      200:
-        description: Successful response.
+paths:
+  /calendar:
+    post:
+      tags:
+        - Calendar controller
+      summary: Create a new calendar
+      description: Create a new calendar entry in the system.
+      requestBody:
+        required: true
         content:
           application/json:
             schema:
               type: object
+              required:
+                - name
+                - color
               properties:
-                id:
-                  type: string
                 name:
                   type: string
+                  description: The name of the calendar.
                 color:
                   type: string
-                ownerId:
-                  type: string
-
-      403:
-        description: unautorized
-      500:
-        description: Server error
-  get:
-    tags:
-      - Calednar controller
-    summary: get calendars
-    description: Retrieve a list of calednars from the database.
-    responses:
-      200:
-        description: Successful response with a list of users.
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
+                  description: The color associated with the calendar.
+      responses:
+        200:
+          description: Successfully created a new calendar entry.
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
                   id:
                     type: string
+                    description: The unique identifier of the calendar.
                   name:
                     type: string
+                    description: The name of the calendar.
                   color:
                     type: string
+                    description: The color associated with the calendar.
                   ownerId:
                     type: string
+                    description: The ID of the owner of the calendar.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        500:
+          description: Server error. An error occurred on the server.
 
-      403:
-        description: unautorized
-      500:
-        description: Server error
+    get:
+      tags:
+        - Calendar controller
+      summary: Retrieve a list of calendars
+      description: Retrieve a list of all calendars from the database.
+      responses:
+        200:
+          description: Successful response with a list of calendars.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The unique identifier of the calendar.
+                    name:
+                      type: string
+                      description: The name of the calendar.
+                    color:
+                      type: string
+                      description: The color associated with the calendar.
+                    ownerId:
+                      type: string
+                      description: The ID of the owner of the calendar.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        500:
+          description: Server error. An error occurred on the server.
 
-  put:
-    tags:
-      - Calednar controller
-    summary: Update calendar
-    description: update.
-    parameters:
-      - in: path
-        name: id
-        required: true
-        schema:
-          type: string
-    requestBody:
-      required: true
-      content:
-        application/json:
+  /calendar/{id}:
+    put:
+      tags:
+        - Calendar controller
+      summary: Update a calendar
+      description: Update an existing calendar entry by ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
           schema:
-            type: object
-            required:
-              - name
-              - color
-            properties:
-              name:
-                type: string
-              color:
-                type: string
-    responses:
-      200:
-        description: Successful response.
+            type: string
+            description: The ID of the calendar entry to update.
+      requestBody:
+        required: true
         content:
           application/json:
             schema:
               type: object
+              required:
+                - name
+                - color
               properties:
-                id:
-                  type: string
                 name:
                   type: string
+                  description: The name of the calendar.
                 color:
                   type: string
-                ownerId:
-                  type: string
-
-      403:
-        description: unautorized
-      500:
-        description: Server error
+                  description: The color associated with the calendar.
+      responses:
+        200:
+          description: Successfully updated the calendar entry.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the calendar.
+                  name:
+                    type: string
+                    description: The name of the calendar.
+                  color:
+                    type: string
+                    description: The color associated with the calendar.
+                  ownerId:
+                    type: string
+                    description: The ID of the owner of the calendar.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        500:
+          description: Server error. An error occurred on the server.

@@ -9,11 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { PageFrom } from '../../models/pageForm.model';
-import {
-  AuthLoginPostRequest,
-  CalendarControllerClientService,
-} from '../../../../api-client';
-import { HttpClientModule } from '@angular/common/http';
+import { AuthLoginPostRequest } from '../../../../api-client';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  private router = inject(Router);
+  protected router = inject(Router);
   private _auth = inject(AuthService);
 
   protected form: FormGroup = new FormGroup({

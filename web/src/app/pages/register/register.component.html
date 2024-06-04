@@ -5,10 +5,21 @@
   <div class="card p-3">
     <div class="card-body">
       <div class="card-title mt-2 mb-4">
-        <h3 class="text-center">Zaloguj się</h3>
+        <h3 class="text-center">Zarejestruj się się</h3>
       </div>
       <div class="card-text">
-        <form [formGroup]="form" (ngSubmit)="login()">
+        <form [formGroup]="form" (ngSubmit)="register()">
+          <div class="form-floating mb-3 text-center">
+            <input
+              type="text"
+              class="form-control"
+              [class.is-invalid]="!pageForm.isControlValid('username')"
+              id="username"
+              placeholder=""
+              formControlName="username"
+            />
+            <label for="username">Nazwa użytkownika</label>
+          </div>
           <div class="form-floating mb-3 text-center">
             <input
               type="email"
@@ -31,9 +42,22 @@
             />
             <label for="password">Hasło</label>
           </div>
+          <div class="form-floating mb-3 text-center">
+            <input
+              type="password"
+              class="form-control"
+              [class.is-invalid]="
+                !pageForm.isControlValid('passwordConfirmation')
+              "
+              id="passwordConfirmation"
+              placeholder=""
+              formControlName="passwordConfirmation"
+            />
+            <label for="passwordConfirmation">Powtórz hasło</label>
+          </div>
           <div class="me-3" style="text-align: right">
-            <a class="mx-2" (click)="router.navigate(['/register'])"
-              >Zarejestruj się</a
+            <a class="mx-2" (click)="router.navigate(['/login'])"
+              >Zaloguj się</a
             >
             <button type="submit" class="btn btn-primary mx-2">Zaloguj</button>
           </div>

@@ -1,0 +1,146 @@
+paths:
+  /task:
+    post:
+      tags:
+        - Task controller
+      summary: Create a new task
+      description: Create a new task for the authenticated user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+                - date
+              properties:
+                name:
+                  type: string
+                  description: The name of the task.
+                description:
+                  type: string
+                  description: The description of the task.
+                date:
+                  type: string
+                  format: date
+                  description: The date and time of the task.
+      responses:
+        200:
+          description: Successfully created a new task.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the task.
+                  name:
+                    type: string
+                    description: The name of the task.
+                  description:
+                    type: string
+                    description: The description of the task.
+                  date:
+                    type: string
+                    format: date
+                    description: The date and time of the task.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        400:
+          description: Bad request. Invalid input data.
+
+    get:
+      tags:
+        - Task controller
+      summary: Retrieve tasks for the authenticated user
+      description: Retrieve a list of all tasks for the authenticated user.
+      responses:
+        200:
+          description: Successfully retrieved the list of tasks.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The unique identifier of the task.
+                    name:
+                      type: string
+                      description: The name of the task.
+                    description:
+                      type: string
+                      description: The description of the task.
+                    date:
+                      type: string
+                      format: date
+                      description: The date and time of the task.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        400:
+          description: Bad request. Invalid input data.
+
+  /task/{id}:
+    put:
+      tags:
+        - Task controller
+      summary: Update a task
+      description: Update an existing task by ID for the authenticated user.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            description: The ID of the task to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+                - date
+              properties:
+                name:
+                  type: string
+                  description: The name of the task.
+                description:
+                  type: string
+                  description: The description of the task.
+                date:
+                  type: string
+                  format: date
+                  description: The date and time of the task.
+      responses:
+        200:
+          description: Successfully updated the task.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the task.
+                  name:
+                    type: string
+                    description: The name of the task.
+                  description:
+                    type: string
+                    description: The description of the task.
+                  date:
+                    type: string
+                    format: date
+                    description: The date and time of the task.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        400:
+          description: Bad request. Invalid input data.

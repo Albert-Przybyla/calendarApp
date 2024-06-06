@@ -1,6 +1,5 @@
 import { createEvent, getEventById, getEventsForUser, getEventsForUserbyDates } from "../db/event";
 import { Request, Response } from "express";
-import { get } from "lodash";
 
 export const createEventReq = async (req: Request, res: Response) => {
   try {

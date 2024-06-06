@@ -1,4 +1,4 @@
-import { createEvent, getEventById, getEventsForUser } from "../db/event";
+import { createEvent, getEventById, getEventsForUser, getEventsForUserbyDates } from "../db/event";
 import { Request, Response } from "express";
 import { get } from "lodash";
 
@@ -62,6 +62,25 @@ export const getEventsForUserReq = async (req: Request, res: Response) => {
       return res.sendStatus(403);
     }
     const Events = await getEventsForUser(currentUserId);
+    return res.status(200).json(Events);
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(400);
+  }
+};
+
+export const getEventsForUserByDatesReq = async (req: Request, res: Response) => {
+  try {
+    if (!req.body.start || !req.body.end) {
+      return res.sendStatus(400);
+    }
+    const currentUserId = req.user?.id;
+    const start = new Date(req.body.start);
+    const end = new Date(req.body.end);
+    if (!currentUserId) {
+      return res.sendStatus(403);
+    }
+    const Events = await getEventsForUserbyDates(currentUserId, start, end);
     return res.status(200).json(Events);
   } catch (err) {
     console.error(err);

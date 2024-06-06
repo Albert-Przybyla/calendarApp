@@ -16,3 +16,10 @@ export const createEvent = (values: Record<string, any>) =>
 
 export const getEventsForUser = (userId: String) => EventModule.find({ ownerId: userId });
 export const getEventById = (id: string) => EventModule.findById(id);
+export const getEventsForUserbyDates = (userId: String, regStart: Date, reqEnd: Date) => {
+  return EventModule.find({
+    ownerId: userId,
+    start: { $gte: regStart },
+    end: { $lte: reqEnd },
+  });
+};

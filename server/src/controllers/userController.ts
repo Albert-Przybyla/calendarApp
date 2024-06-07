@@ -47,3 +47,17 @@ export const updateUser = async (req: Request, res: Response) => {
     return res.sendStatus(400);
   }
 };
+
+export const generateKey = async (req: Request, res: Response) => {
+  try {
+    const user = await getUserById(req.user.id);
+    user.key = Array.from({ length: 20 }, () =>
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".charAt(Math.floor(Math.random() * 62))
+    ).join("");
+    await user.save();
+    return res.status(200).json({ id: user.id, key: user.key }).end();
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(400);
+  }
+};

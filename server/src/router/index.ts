@@ -4,6 +4,7 @@ import userRouter from "./userRouter";
 import typicalEventRouter from "./typicalEventRouter";
 import eventRouter from "./eventRouter";
 import caldendarRouter from "./calendarRouter";
+import icalRouter from "./icalRouter";
 
 const router = express.Router();
 
@@ -13,5 +14,6 @@ export default (): express.Router => {
   typicalEventRouter(router);
   eventRouter(router);
   caldendarRouter(router);
+  icalRouter(router);
   return router;
 };

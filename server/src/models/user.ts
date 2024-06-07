@@ -5,3 +5,8 @@ export interface UserData {
   username: string;
   email: string;
 }
+
+export interface UserKeyData {
+  id: string;
+  key: string;
+}

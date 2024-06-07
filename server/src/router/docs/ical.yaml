@@ -1,0 +1,54 @@
+paths:
+  /ical:
+    get:
+      tags:
+        - iCal controller
+      summary: Retrieve iCal events for the authenticated user
+      description: Retrieve a list of iCal events for the authenticated user using their ID and API key.
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+            description: The ID of the user.
+        - in: query
+          name: key
+          required: true
+          schema:
+            type: string
+            description: The API key of the user.
+      responses:
+        200:
+          description: Successfully retrieved the list of iCal events.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The unique identifier of the event.
+                    name:
+                      type: string
+                      description: The name of the event.
+                    description:
+                      type: string
+                      description: The description of the event.
+                    start:
+                      type: string
+                      format: date-time
+                      description: The start date and time of the event.
+                    end:
+                      type: string
+                      format: date-time
+                      description: The end date and time of the event.
+                    calendarId:
+                      type: string
+                      description: The ID of the calendar to which the event belongs.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions or invalid API key.
+        400:
+          description: Bad request. Invalid input data or server error.

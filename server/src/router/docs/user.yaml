@@ -81,3 +81,28 @@ paths:
           description: Unauthorized. The user does not have the necessary permissions.
         500:
           description: Server error. An error occurred on the server.
+
+  /user/key:
+    get:
+      tags:
+        - User Controller
+      summary: Generate a new API key for the authenticated user
+      description: Generates a new API key for the authenticated user.
+      responses:
+        200:
+          description: Successfully generated a new API key.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the user.
+                  key:
+                    type: string
+                    description: The newly generated API key.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        400:
+          description: Bad request. Invalid input data or server error.

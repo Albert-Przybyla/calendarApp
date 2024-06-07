@@ -8,13 +8,17 @@ const UserSchema = new mongoose.Schema({
     salt: { type: String, select: false },
     sessionToken: { type: String, select: false },
   },
+  key: { type: String, required: false, select: false },
 });
 export const UserModule = mongoose.model("User", UserSchema);
 
 export const getUsers = () => UserModule.find();
 export const getUserByEmail = (email: string) => UserModule.findOne({ email });
-export const getUserBySessionToken = (sessionToken: string) => UserModule.findOne({ "authenticaion.sessionToken": sessionToken });
+export const getUserBySessionToken = (sessionToken: string) =>
+  UserModule.findOne({ "authenticaion.sessionToken": sessionToken });
 export const getUserById = (id: string) => UserModule.findById(id);
-export const createUser = (values: Record<string, any>) => new UserModule(values).save().then((user) => user.toObject());
+export const createUser = (values: Record<string, any>) =>
+  new UserModule(values).save().then((user) => user.toObject());
 export const deleteUserById = (id: string) => UserModule.findByIdAndDelete({ _id: id });
-export const updateUserById = (id: string, values: Record<string, any>) => UserModule.findByIdAndUpdate(id, values);
+export const updateUserById = (id: string, values: Record<string, any>) =>
+  UserModule.findByIdAndUpdate(id, values);

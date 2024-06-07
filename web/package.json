@@ -8,7 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "api": "openapi-generator-cli generate -i http://localhost:8080/docs.json -g typescript-angular --additional-properties=serviceSuffix=ClientService -o api-client",
+    "api": "openapi-generator-cli generate -i http://localhost:8080/docs.json -g typescript-angular --additional-properties=serviceSuffix=ClientService -o projects/api-client",
     "electron": "electron .",
     "electron-build": "ng build && electron ."
   },

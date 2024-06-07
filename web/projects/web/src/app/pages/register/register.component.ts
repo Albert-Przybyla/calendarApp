@@ -8,12 +8,12 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PageFrom } from '../../models/pageForm.model';
+import { passwordsMatchValidator } from '../../validators/ passwordsMatchValidator';
+import { passwordStrengthValidator } from '../../validators/passwordStrengthValidator';
 import {
   AuthControllerClientService,
   AuthRegisterPostRequest,
-} from '../../../../api-client';
-import { passwordsMatchValidator } from '../../validators/ passwordsMatchValidator';
-import { passwordStrengthValidator } from '../../validators/passwordStrengthValidator';
+} from '../../../../../api-client';
 
 @Component({
   selector: 'app-register',

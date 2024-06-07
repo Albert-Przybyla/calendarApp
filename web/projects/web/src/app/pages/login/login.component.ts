@@ -9,7 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { PageFrom } from '../../models/pageForm.model';
-import { AuthLoginPostRequest } from '../../../../api-client';
+import { AuthLoginPostRequest } from '../../../../../api-client';
 
 @Component({
   selector: 'app-login',

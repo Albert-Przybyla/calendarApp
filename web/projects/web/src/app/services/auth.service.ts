@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
+
+import { TOKEN_KEY } from '../../constants';
+import { User } from '../models/user.model';
 import {
   AuthControllerClientService,
   AuthLoginPostRequest,
-} from '../../../api-client';
-import { TOKEN_KEY } from '../../constants';
-import { User } from '../models/user.model';
+} from '../../../../api-client';
 
 @Injectable({
   providedIn: 'root',

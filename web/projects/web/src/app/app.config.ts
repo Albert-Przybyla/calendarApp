@@ -8,9 +8,10 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { environment } from '../environments/environment';
-import { BASE_PATH } from '../../api-client';
+
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { BASE_PATH } from '../../../api-client';
 
 export const appConfig: ApplicationConfig = {
   providers: [

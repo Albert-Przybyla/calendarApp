@@ -1,0 +1,61 @@
+.card {
+  overflow: hidden;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0px;
+}
+
+.calendar-day {
+  padding: 10px;
+  aspect-ratio: 1/0.8;
+  border-left: var(--bs-border-width) solid var(--bs-border-color-translucent);
+  border-bottom: var(--bs-border-width) solid var(--bs-border-color-translucent);
+  text-align: center;
+  overflow-x: hidden;
+  position: relative;
+
+  .label {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+  }
+
+  .label-to-day {
+    background-color: red;
+  }
+
+  .hidden-button {
+    position: absolute;
+    right: -50px;
+    top: 5px;
+    transition: 0.4s ease-out;
+  }
+}
+
+.calendar-day:hover {
+  .hidden-button {
+    transform: translateX(-55px) !important;
+  }
+}
+
+.calendar-day:nth-child(7n) {
+  border-right: none !important;
+}
+
+.calendar-day:nth-child(7n + 1) {
+  border-left: none !important;
+}
+
+.calendar-day:nth-child(-n + 7) {
+  border-top: none !important;
+}
+
+.calendar-day:nth-last-child(-n + 7) {
+  border-bottom: none !important;
+}

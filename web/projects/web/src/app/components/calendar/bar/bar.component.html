@@ -1,8 +1,17 @@
 <div class="card d-flex justify-content-between flex-row">
-  <div class="box">
+  <div class="box d-flex">
     <button class="btn"><i class="bi bi-calendar3"></i></button>
     <button class="btn"><i class="bi bi-grid-1x2"></i></button>
     <button class="btn"><i class="bi bi-calendar"></i></button>
   </div>
-  <div class="box"><input type="date" class="form-control" /></div>
+  <div class="box d-flex">
+    <button class="btn"><i class="bi bi-caret-left-fill"></i></button>
+    <button class="btn"><i class="bi bi-caret-right-fill"></i></button>
+    <input
+      type="date"
+      class="form-control"
+      [value]="date.toISOString().slice(0, 10)"
+      (ngModelChange)="updateDate($event)"
+    />
+  </div>
 </div>

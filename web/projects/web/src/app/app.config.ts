@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { BASE_PATH } from '../../../api-client';
+import './date-extensions';
 
 export const appConfig: ApplicationConfig = {
   providers: [

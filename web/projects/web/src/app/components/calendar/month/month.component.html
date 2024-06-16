@@ -1,1 +1,11 @@
-<p>month works!</p>
+<div class="card calendar">
+  <div *ngFor="let date of getDates()" class="calendar-day">
+    <span class="label" [class.label-to-day]="date.compareTo(toDay) === 0">
+      {{ date | date : "d" }}
+    </span>
+
+    <button class="btn btn-sm btn-primary hidden-button">
+      <i class="bi bi-plus-lg"></i>
+    </button>
+  </div>
+</div>

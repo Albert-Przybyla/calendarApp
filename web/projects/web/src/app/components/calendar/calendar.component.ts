@@ -11,6 +11,4 @@ import { YearComponent } from './year/year.component';
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
-export class CalendarComponent {
-  protected date: Date = new Date();
-}
+export class CalendarComponent {}

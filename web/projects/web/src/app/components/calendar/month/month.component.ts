@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnInit,
   SimpleChanges,
   inject,
 } from '@angular/core';
@@ -15,9 +16,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './month.component.html',
   styleUrl: './month.component.scss',
 })
-export class MonthComponent implements OnChanges {
-  @Input() monthYear: Date;
-
+export class MonthComponent implements OnInit {
   private eventControllerClientService = inject(EventControllerClientService);
 
   protected start: Date;
@@ -26,10 +25,13 @@ export class MonthComponent implements OnChanges {
 
   protected loading: boolean = true;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.toDay.getDay());
-    this.start = this.monthYear.getStartOfMonth().getStartOfWeek();
-    this.end = this.monthYear.getEndOfMonth().getEndOfWeek();
+  ngOnInit(): void {
+    this.prepareData(this.toDay);
+  }
+
+  prepareData(d: Date) {
+    this.start = d.getStartOfMonth().getStartOfWeek();
+    this.end = d.getEndOfMonth().getEndOfWeek();
     this.getEvents();
   }
 

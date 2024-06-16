@@ -1,1 +1,2 @@
-<app-bar></app-bar> <app-month [monthYear]="date"></app-month>
+<app-bar (dateChange)="month.prepareData($event)"></app-bar>
+<app-month #month></app-month>

@@ -1,0 +1,14 @@
+{
+  "CALENDAR_TYPE": {
+    "Day": "Dzień",
+    "Week": "Tydzień",
+    "Month": "Miesiąc",
+    "Year": "Rok"
+  },
+  "CALENDAR_TYPE_ICON": {
+    "Day": "bi-calendar-day",
+    "Week": "bi-grid-1x2",
+    "Month": "bi-calendar3",
+    "Year": "bi-calendar"
+  }
+}

@@ -1,5 +1,5 @@
 export enum CalednarType {
-  Day,
+  Day = 0,
   Week,
   Month,
   Year,

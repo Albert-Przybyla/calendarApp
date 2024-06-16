@@ -1,17 +1,31 @@
-<div class="card d-flex justify-content-between flex-row">
+<div class="card d-flex justify-content-between flex-row" style="padding: 5px">
   <div class="box d-flex">
-    <button class="btn"><i class="bi bi-calendar3"></i></button>
-    <button class="btn"><i class="bi bi-grid-1x2"></i></button>
-    <button class="btn"><i class="bi bi-calendar"></i></button>
+    <button
+      class="btn"
+      [class.btn-outline-primary]="i != type"
+      [class.btn-primary]="i == type"
+      (click)="updateType(i)"
+      *ngFor="let calednarType of calednarTypes | enumTranslate; let i = index"
+      [value]="i + 1"
+    >
+      <i class="bi {{ 'CALENDAR_TYPE_ICON.' + calednarType | translate }}"></i>
+      {{ "CALENDAR_TYPE." + calednarType | translate }}
+    </button>
   </div>
   <div class="box d-flex">
-    <button class="btn"><i class="bi bi-caret-left-fill"></i></button>
-    <button class="btn"><i class="bi bi-caret-right-fill"></i></button>
+    <button class="btn" (click)="incrementDate(-1)">
+      <i class="bi bi-caret-left-fill"></i>
+    </button>
+    <button class="btn" (click)="incrementDate(1)">
+      <i class="bi bi-caret-right-fill"></i>
+    </button>
     <input
-      type="date"
+      [type]="getInputType()"
       class="form-control"
-      [value]="date.toISOString().slice(0, 10)"
-      (ngModelChange)="updateDate($event)"
+      [value]="getInputValue()"
+      (change)="updateDate($event)"
+      step="1"
+      min="0"
     />
   </div>
 </div>

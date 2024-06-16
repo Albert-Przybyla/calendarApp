@@ -6,6 +6,7 @@ declare global {
     getEndOfMonth(): Date;
     getStartOfWeek(): Date;
     getEndOfWeek(): Date;
+    getWeek(): number;
     compareTo(date: Date): number;
   }
 }
@@ -33,6 +34,15 @@ Date.prototype.getEndOfWeek = function (): Date {
   endOfWeek.setDate(startOfWeek.getDate() + 6);
   endOfWeek.setHours(23, 59, 59, 999);
   return endOfWeek;
+};
+
+Date.prototype.getWeek = function (): number {
+  const date = new Date(this);
+  const onejan = new Date(date.getFullYear(), 0, 1);
+  const weekNum = Math.ceil(
+    ((date.getTime() - onejan.getTime()) / 86400000 + onejan.getDay() + 1) / 7
+  );
+  return weekNum - 1;
 };
 
 Date.prototype.compareTo = function (date: Date): number {

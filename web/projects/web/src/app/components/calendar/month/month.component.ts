@@ -27,6 +27,7 @@ export class MonthComponent implements OnChanges {
   protected loading: boolean = true;
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.toDay.getDay());
     this.start = this.monthYear.getStartOfMonth().getStartOfWeek();
     this.end = this.monthYear.getEndOfMonth().getEndOfWeek();
     this.getEvents();

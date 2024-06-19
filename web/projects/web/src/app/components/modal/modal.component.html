@@ -1,0 +1,19 @@
+<div class="modal-backdrop">
+  <div class="modal-content {{ size }}">
+    <div class="modal-header">
+      <h5 class="modal-header-title">{{ title }}</h5>
+      <button
+        type="button"
+        class="modal-header-close btn"
+        data-dismiss="modal"
+        aria-label="Close"
+        (click)="close()"
+      >
+        x
+      </button>
+    </div>
+    <div class="modal-body">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

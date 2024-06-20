@@ -4,7 +4,6 @@ import { MonthComponent } from './month/month.component';
 import { WeekComponent } from './week/week.component';
 import { YearComponent } from './year/year.component';
 import { ModalService } from '../../services/modal.service';
-import { EventComponent } from '../../forms/event/event.component';
 
 @Component({
   selector: 'app-calendar',

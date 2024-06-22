@@ -1,8 +1,10 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
   inject,
 } from '@angular/core';
@@ -17,6 +19,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './month.component.scss',
 })
 export class MonthComponent implements OnInit {
+  @Output() createEvent = new EventEmitter<Date>();
+
   private eventControllerClientService = inject(EventControllerClientService);
 
   protected start: Date;

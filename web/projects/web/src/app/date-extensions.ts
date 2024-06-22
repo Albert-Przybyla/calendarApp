@@ -1,3 +1,5 @@
+import { retry } from 'rxjs';
+
 export {};
 
 declare global {
@@ -8,6 +10,10 @@ declare global {
     getEndOfWeek(): Date;
     getWeek(): number;
     compareTo(date: Date): number;
+    setTimeFromDate(date: Date): void;
+    addHours(hours: number): Date;
+    getTimeString(): string;
+    formatNumber(n: number): string;
   }
 }
 
@@ -57,4 +63,26 @@ Date.prototype.compareTo = function (date: Date): number {
     return thisDate.getDate() > date.getDate() ? 1 : -1;
   }
   return 0;
+};
+
+Date.prototype.setTimeFromDate = function (d: Date): void {
+  this.setHours(d.getHours());
+  this.setMinutes(d.getMinutes());
+  this.setSeconds(d.getSeconds());
+  this.setMilliseconds(d.getMilliseconds());
+};
+
+Date.prototype.addHours = function (hours: number): Date {
+  this.setHours(this.getHours() + hours);
+  return this;
+};
+
+Date.prototype.getTimeString = function (): string {
+  return `${this.formatNumber(this.getHours())}:${this.formatNumber(
+    this.getMinutes()
+  )}`;
+};
+
+Date.prototype.formatNumber = function (num: number): string {
+  return num < 10 ? `0${num}` : `${num}`;
 };

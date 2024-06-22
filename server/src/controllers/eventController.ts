@@ -4,10 +4,12 @@ import { Request, Response } from "express";
 export const createEventReq = async (req: Request, res: Response) => {
   try {
     const { name, description, start, end, calendarId } = req.body;
+    console.log({ name, description, start, end, calendarId });
     if (!name || !start || !end) {
       return res.sendStatus(400);
     }
     const currentUserId = req.user?.id;
+    console.log({ currentUserId });
     if (!currentUserId) {
       return res.sendStatus(403);
     }
@@ -19,6 +21,8 @@ export const createEventReq = async (req: Request, res: Response) => {
       ownerId: currentUserId,
       calendarId,
     });
+    console.log({ Event });
+
     return res.status(200).json(Event).end();
   } catch (err) {
     console.error(err);

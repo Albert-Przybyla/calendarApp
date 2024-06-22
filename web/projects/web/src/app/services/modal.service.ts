@@ -23,15 +23,14 @@ export class ModalService {
     @Inject(DOCUMENT) private document: Document
   ) {}
 
-  open(content: TemplateRef<any>, options?: any): Observable<string> {
+  open(content: any, data?: any, options?: any): Observable<string> {
     const modalFactory = this.resolver.resolveComponentFactory(ModalComponent);
-    const viewRef = content.createEmbeddedView(null);
-    const modalComponent = modalFactory.create(this.injector, [
-      viewRef.rootNodes,
-    ]);
+    const modalComponent = modalFactory.create(this.injector);
 
     modalComponent.instance.size = options?.size;
     modalComponent.instance.title = options?.title;
+    modalComponent.instance.data = data;
+    modalComponent.instance.content = content;
     modalComponent.instance.closeEvent.subscribe(() => this.close());
     modalComponent.instance.submitEvent.subscribe(() => this.submit());
 

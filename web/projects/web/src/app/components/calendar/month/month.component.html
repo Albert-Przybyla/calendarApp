@@ -4,7 +4,10 @@
       {{ date | date : "d" }}
     </span>
 
-    <button class="btn btn-sm btn-primary hidden-button">
+    <button
+      class="btn btn-sm btn-primary hidden-button"
+      (click)="createEvent.emit(date)"
+    >
       <i class="bi bi-plus-lg"></i>
     </button>
   </div>

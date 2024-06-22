@@ -26,7 +26,7 @@ export const login = async (req: Request, res: Response) => {
       username: user.username,
       email: user.email,
     };
-    const token = sign(payload, process.env.ACCESS_TOKEN, { expiresIn: "1h" });
+    const token = sign(payload, process.env.ACCESS_TOKEN, { expiresIn: "2h" });
     const refreshToken = sign(payload, process.env.REFRESH_TOKEN, { expiresIn: "4h" });
     user.authenticaion.refreshToken = refreshToken;
     await user.save();
@@ -93,13 +93,13 @@ export const refresh = async (req: Request, res: Response) => {
       email: user.email,
     };
 
-    const newToken = sign(payload, process.env.ACCESS_TOKEN, { expiresIn: "1h" });
+    const newToken = sign(payload, process.env.ACCESS_TOKEN, { expiresIn: "2h" });
     const newRefreshToken = sign(payload, process.env.REFRESH_TOKEN, { expiresIn: "4h" });
 
     user.authenticaion.refreshToken = refreshToken;
     await user.save();
 
-    return res.json({ accessToken: newToken, refreshToken: newRefreshToken }).end();
+    return res.json({ token: newToken, refreshToken: newRefreshToken }).end();
   } catch {
     return res.sendStatus(400);
   }

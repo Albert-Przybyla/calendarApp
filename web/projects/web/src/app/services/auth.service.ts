@@ -1,11 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 
-import { TOKEN_KEY } from '../../constants';
+import { REFRESH_TOKEN_KEY, TOKEN_KEY } from '../../constants';
 import { User } from '../models/user.model';
 import {
   AuthControllerClientService,
   AuthLoginPostRequest,
+  AuthRefreshPost200Response,
+  AuthRefreshPostRequest,
 } from '../../../../api-client';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +23,7 @@ export class AuthService {
   ) {
     this._auth.authLoginPost(login).subscribe({
       next: (v) => {
-        const token = v.token;
-        this.setToken(token!);
+        this.setToken(v.token!, v.refreshToken!);
         onLogin();
       },
       error: (e) => {
@@ -30,8 +32,9 @@ export class AuthService {
     });
   }
 
-  private setToken(userToken: string): void {
+  private setToken(userToken: string, refreshToken: string): void {
     localStorage.setItem(TOKEN_KEY, userToken);
+    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
   }
 
   private removeToken(): void {
@@ -42,6 +45,22 @@ export class AuthService {
     let token = localStorage.getItem(TOKEN_KEY);
     if (token) if (this.isTokenValid(token!)) return token;
     return null;
+  }
+
+  public refreshToken(): Observable<AuthRefreshPost200Response> {
+    let token = localStorage.getItem(TOKEN_KEY);
+    let refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
+    return this._auth
+      .authRefreshPost({
+        token: token,
+        refreshToken: refreshToken,
+      } as AuthRefreshPostRequest)
+      .pipe(
+        tap((response: any) => {
+          localStorage.setItem(TOKEN_KEY, response.token);
+          localStorage.setItem(REFRESH_TOKEN_KEY, response.refreshToken);
+        })
+      );
   }
 
   public getUser(): string | null {

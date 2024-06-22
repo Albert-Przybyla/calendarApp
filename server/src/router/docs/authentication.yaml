@@ -125,7 +125,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  accessToken:
+                  token:
                     type: string
                     description: The new access token.
                   refreshToken:

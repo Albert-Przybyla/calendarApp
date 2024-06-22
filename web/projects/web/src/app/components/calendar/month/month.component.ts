@@ -1,15 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
-import { EventControllerClientService } from '../../../../../../api-client';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EventForCalendar } from '../event.model';
+import { GetEvents } from '../getEvents.model';
 
 @Component({
   selector: 'app-month',
@@ -20,14 +12,13 @@ import { CommonModule } from '@angular/common';
 })
 export class MonthComponent implements OnInit {
   @Output() createEvent = new EventEmitter<Date>();
+  @Output() getEvents = new EventEmitter<GetEvents>();
 
-  private eventControllerClientService = inject(EventControllerClientService);
+  @Input() events: EventForCalendar[] = [];
 
   protected start: Date;
   protected end: Date;
   protected toDay: Date = new Date();
-
-  protected loading: boolean = true;
 
   ngOnInit(): void {
     this.prepareData(this.toDay);
@@ -36,24 +27,31 @@ export class MonthComponent implements OnInit {
   prepareData(d: Date) {
     this.start = d.getStartOfMonth().getStartOfWeek();
     this.end = d.getEndOfMonth().getEndOfWeek();
-    this.getEvents();
+    this.getEvents.next({ start: this.start, end: this.end });
   }
 
-  private getCalendars() {}
+  protected getEventsForDay(d: Date) {
+    return this.events.filter(
+      (x) =>
+        new Date(x.end!).compareTo(d) >= 0 &&
+        new Date(x.start!).compareTo(d) <= 0
+    );
+  }
 
-  private getEvents() {
-    this.eventControllerClientService
-      .eventByDatesPost({
-        start: this.start.toJSON(),
-        end: this.end.toJSON(),
-      })
-      .subscribe({
-        next: (v) => {
-          console.log(v);
-        },
-        error: (e) => console.error(e),
-        complete: () => (this.loading = false),
-      });
+  protected getEventsGroupedByCalendar(d: Date): Group[] | undefined {
+    const ev = this.getEventsForDay(d);
+    if (!ev.length) return undefined;
+    const groups: Group[] = [];
+    ev.forEach((x) => {
+      const g = groups.find((y) => y.id === x.calendarId);
+      if (g) {
+        g.events.push(x);
+      } else {
+        groups.push(new Group(x));
+      }
+    });
+    console.log(groups);
+    return groups;
   }
 
   protected getDates(): Date[] {
@@ -66,5 +64,17 @@ export class MonthComponent implements OnInit {
     }
 
     return dates;
+  }
+}
+
+class Group {
+  id: string;
+  color: string;
+  events: EventForCalendar[];
+
+  constructor(event: EventForCalendar) {
+    this.id = event.calendarId;
+    this.color = event.calendarColor!;
+    this.events = [event];
   }
 }

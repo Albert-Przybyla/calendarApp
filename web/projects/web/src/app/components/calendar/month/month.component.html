@@ -3,6 +3,17 @@
     <span class="label" [class.label-to-day]="date.compareTo(toDay) === 0">
       {{ date | date : "d" }}
     </span>
+    <div *ngIf="getEventsGroupedByCalendar(date) as eventGroups" class="events">
+      <div
+        *ngFor="let eventGroup of eventGroups"
+        class="events-group"
+        [ngStyle]="{
+            'background-color': eventGroup.color,
+          }"
+      >
+        {{ eventGroup.events.length }}
+      </div>
+    </div>
 
     <button
       class="btn btn-sm btn-primary hidden-button"

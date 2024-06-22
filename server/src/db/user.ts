@@ -10,6 +10,18 @@ const UserSchema = new mongoose.Schema({
   },
   key: { type: String, required: false, select: false },
 });
+
+UserSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+UserSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id;
+  },
+});
+
 export const UserModule = mongoose.model("User", UserSchema);
 
 export const getUsers = () => UserModule.find();

@@ -5,6 +5,16 @@ const CalendarSchema = new mongoose.Schema({
   color: { type: String, required: true },
   ownerId: { type: String, required: true },
 });
+CalendarSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+CalendarSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id;
+  },
+});
 
 export const CalendarModule = mongoose.model("Calendar", CalendarSchema);
 

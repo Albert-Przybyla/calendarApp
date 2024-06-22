@@ -27,6 +27,17 @@ const EventSchema = new mongoose.Schema({
   calendarId: { type: String, required: false },
 });
 
+EventSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+EventSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id;
+  },
+});
+
 export const EventModule = mongoose.model("Event", EventSchema);
 
 export const createEvent = (values: Record<string, any>) =>

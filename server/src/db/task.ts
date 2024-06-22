@@ -7,6 +7,17 @@ const TaskSchema = new mongoose.Schema({
   ownerId: { type: String, required: true },
 });
 
+TaskSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+TaskSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id;
+  },
+});
+
 export const TaskModule = mongoose.model("Task", TaskSchema);
 
 export const createTask = (values: Record<string, any>) =>

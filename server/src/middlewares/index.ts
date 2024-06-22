@@ -42,3 +42,17 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
     next();
   });
 };
+
+export const assignUser = async (req: Request, res: Response, next: NextFunction) => {
+  const { token } = req.body;
+  if (!token) {
+    return res.sendStatus(401);
+  }
+  verify(token, process.env.ACCESS_TOKEN, { ignoreExpiration: true }, (err, data) => {
+    if (err) {
+      return res.sendStatus(401);
+    }
+    req.user = data as UserData;
+    next();
+  });
+};

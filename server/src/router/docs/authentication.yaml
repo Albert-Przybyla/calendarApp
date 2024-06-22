@@ -86,8 +86,53 @@ paths:
                   token:
                     type: string
                     description: The JWT token for authenticated access.
+                  refreshToken:
+                    type: string
+                    description: The JWT token for refresh token.
         403:
           description: Unauthorized. Incorrect email or password.
+        400:
+          description: Data Error. Invalid input data.
+        500:
+          description: Server Error. An error occurred on the server.
+  /auth/refresh:
+    post:
+      tags:
+        - Auth Controller
+      summary: Refresh JWT tokens
+      description: Refresh the access and refresh tokens.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - token
+                - refreshToken
+              properties:
+                token:
+                  type: string
+                  description: The current access token.
+                refreshToken:
+                  type: string
+                  description: The current refresh token.
+      responses:
+        200:
+          description: Successfully refreshed the tokens.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    description: The new access token.
+                  refreshToken:
+                    type: string
+                    description: The new refresh token.
+        401:
+          description: Unauthorized. Invalid tokens.
         400:
           description: Data Error. Invalid input data.
         500:

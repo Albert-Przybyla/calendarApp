@@ -23,7 +23,8 @@ export class CalendarComponent {
     this.modalService
       .open(EventFormComponent, { date: d }, { title: 'cos', size: 'lg' })
       .subscribe((action) => {
-        console.log(action);
+        if (action) {
+        }
       });
   }
 }

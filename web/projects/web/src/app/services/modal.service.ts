@@ -15,7 +15,7 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class ModalService {
-  private modalNotifier?: Subject<string>;
+  private modalNotifier?: Subject<ModalResponse>;
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -23,7 +23,7 @@ export class ModalService {
     @Inject(DOCUMENT) private document: Document
   ) {}
 
-  open(content: any, data?: any, options?: any): Observable<string> {
+  open(content: any, data?: any, options?: any): Observable<ModalResponse> {
     const modalFactory = this.resolver.resolveComponentFactory(ModalComponent);
     const modalComponent = modalFactory.create(this.injector);
 
@@ -41,12 +41,17 @@ export class ModalService {
   }
 
   close() {
-    this.modalNotifier?.next('cancel');
+    this.modalNotifier?.next(ModalResponse.cancel);
     this.modalNotifier?.complete();
   }
 
   submit() {
-    this.modalNotifier?.next('confirm');
+    this.modalNotifier?.next(ModalResponse.confirm);
     this.close();
   }
+}
+
+export enum ModalResponse {
+  cancel = 0,
+  confirm = 1,
 }

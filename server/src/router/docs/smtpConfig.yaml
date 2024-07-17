@@ -1,0 +1,186 @@
+paths:
+  /smtp-config:
+    post:
+      tags:
+        - SMTP Configuration Controller
+      summary: Create a new SMTP configuration
+      description: Create a new SMTP configuration for the authenticated user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - host
+                - port
+                - user
+                - password
+              properties:
+                host:
+                  type: string
+                  description: The SMTP server host.
+                port:
+                  type: integer
+                  description: The port number for the SMTP server.
+                secure:
+                  type: boolean
+                  description: Indicates if the connection should use SSL/TLS.
+                user:
+                  type: string
+                  description: The username for the SMTP server.
+                password:
+                  type: string
+                  description: The password for the SMTP server.
+      responses:
+        200:
+          description: Successfully created a new SMTP configuration.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the SMTP configuration.
+                  host:
+                    type: string
+                    description: The SMTP server host.
+                  port:
+                    type: integer
+                    description: The port number for the SMTP server.
+                  secure:
+                    type: boolean
+                    description: Indicates if the connection uses SSL/TLS.
+                  user:
+                    type: string
+                    description: The username for the SMTP server.
+                  password:
+                    type: string
+                    description: The password for the SMTP server.
+                  ownerId:
+                    type: string
+                    description: The ID of the user who owns this configuration.
+        400:
+          description: Bad Request. Missing or invalid parameters.
+        403:
+          description: Unauthorized. The user is not authenticated.
+        500:
+          description: Server error. An error occurred on the server.
+
+    get:
+      tags:
+        - SMTP Configuration Controller
+      summary: Retrieve SMTP configuration for the authenticated user
+      description: Retrieve the SMTP configuration associated with the authenticated user.
+      responses:
+        200:
+          description: Successfully retrieved the SMTP configuration.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the SMTP configuration.
+                  host:
+                    type: string
+                    description: The SMTP server host.
+                  port:
+                    type: integer
+                    description: The port number for the SMTP server.
+                  secure:
+                    type: boolean
+                    description: Indicates if the connection uses SSL/TLS.
+                  user:
+                    type: string
+                    description: The username for the SMTP server.
+                  password:
+                    type: string
+                    description: The password for the SMTP server.
+                  ownerId:
+                    type: string
+                    description: The ID of the user who owns this configuration.
+        403:
+          description: Unauthorized. The user is not authenticated.
+        500:
+          description: Server error. An error occurred on the server.
+
+  /smtp-config/{id}:
+    put:
+      tags:
+        - SMTP Configuration Controller
+      summary: Update an SMTP configuration
+      description: Update an existing SMTP configuration by ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            description: The ID of the SMTP configuration to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - host
+                - port
+                - user
+                - password
+              properties:
+                host:
+                  type: string
+                  description: The SMTP server host.
+                port:
+                  type: integer
+                  description: The port number for the SMTP server.
+                secure:
+                  type: boolean
+                  description: Indicates if the connection should use SSL/TTLS.
+                user:
+                  type: string
+                  description: The username for the SMTP server.
+                password:
+                  type: string
+                  description: The password for the SMTP server.
+      responses:
+        200:
+          description: Successfully updated the SMTP configuration.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The unique identifier of the SMTP configuration.
+                  host:
+                    type: string
+                    description: The SMTP server host.
+                  port:
+                    type: integer
+                    description: The port number for the SMTP server.
+                  secure:
+                    type: boolean
+                    description: Indicates if the connection uses SSL/TLS.
+                  user:
+                    type: string
+                    description: The username for the SMTP server.
+                  password:
+                    type: string
+                    description: The password for the SMTP server.
+                  ownerId:
+                    type: string
+                    description: The ID of the user who owns this configuration.
+        400:
+          description: Bad Request. Missing or invalid parameters.
+        403:
+          description: Unauthorized. The user is not authenticated.
+        404:
+          description: Not Found. The SMTP configuration does not exist or does not belong to the authenticated user.
+        500:
+          description: Server error. An error occurred on the server.

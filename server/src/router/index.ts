@@ -5,6 +5,7 @@ import typicalEventRouter from "./typicalEventRouter";
 import eventRouter from "./eventRouter";
 import caldendarRouter from "./calendarRouter";
 import icalRouter from "./icalRouter";
+import smtpConfigRouter from "./smtpConfigRouter";
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ export default (): express.Router => {
   eventRouter(router);
   caldendarRouter(router);
   icalRouter(router);
+  smtpConfigRouter(router);
   return router;
 };

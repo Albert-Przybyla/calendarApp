@@ -1,0 +1,21 @@
+<nav>
+  <div class="d-flex justify-content-between navbar-top align-items-center">
+    <div class="d-flex justify-content-between align-items-center">
+      <div
+        class="hamburger"
+        [class.hamburger-active]="menuOpen"
+        [class.hamburger-not-active]="!menuOpen"
+        (click)="toggleMenu()"
+      >
+        <span class="hamburger-item"></span>
+        <span class="hamburger-item"></span>
+        <span class="hamburger-item"></span>
+      </div>
+    </div>
+    <div class="d-flex">
+      <button class="btn menu-btn">
+        <h4 class="bi bi-bell"></h4>
+      </button>
+    </div>
+  </div>
+</nav>

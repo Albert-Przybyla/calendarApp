@@ -1,0 +1,20 @@
+<nav class="side-bar">
+  <div class="text-center py-4 logo-box">
+    <h3>kalendarz</h3>
+    <div class="colapse-btn"></div>
+  </div>
+  <ul>
+    @for(route of routes; track route){
+    <li>
+      <a
+        class="nav-link"
+        [routerLink]="['/app/' + route.path]"
+        routerLinkActive="active"
+      >
+        <i class="bi" [class]="route.data!['icon']"></i>
+        <span>{{ route.data!["label"] }}</span>
+      </a>
+    </li>
+    }
+  </ul>
+</nav>

@@ -1,0 +1,59 @@
+nav {
+  background-color: #c8c8c8;
+  position: absolute;
+  z-index: 999;
+  width: 12%;
+  height: 100%;
+  position: fixed;
+  transition: 0.5s ease-in-out;
+
+  @media (max-width: 576px) {
+    padding-top: 50px;
+    width: 100%;
+  }
+
+  @media (min-width: 576px) and (max-width: 992px) {
+    width: 20%;
+  }
+
+  @media (min-width: 922px) and (max-width: 1500px) {
+    width: 15%;
+  }
+
+  ul {
+    padding: 2px;
+    list-style-type: none;
+
+    li {
+      position: relative;
+    }
+
+    .nav-link {
+      padding: 6px 5px;
+      border-radius: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 100%;
+
+      i {
+        position: relative;
+        top: 2px;
+        font-size: 1.2rem;
+      }
+      span {
+        padding: 5px;
+      }
+    }
+
+    .active {
+      background-color: var(--bs-primary);
+      color: var(--bs-primary-bg-subtle);
+    }
+  }
+
+  .logo {
+    width: 90%;
+    max-width: 200px;
+  }
+}

@@ -1,11 +1,12 @@
-@if(!initLoading){
+<div class="container">
+  @if(!initLoading){
+  <app-bar (dateChange)="month.prepareData($event)"></app-bar>
+  <app-month
+    #month
+    (createEvent)="createEvent($event)"
+    (getEvents)="getEvents($event)"
+    [events]="events"
+  ></app-month>
 
-<app-bar (dateChange)="month.prepareData($event)"></app-bar>
-<app-month
-  #month
-  (createEvent)="createEvent($event)"
-  (getEvents)="getEvents($event)"
-  [events]="events"
-></app-month>
-
-}
+  }
+</div>

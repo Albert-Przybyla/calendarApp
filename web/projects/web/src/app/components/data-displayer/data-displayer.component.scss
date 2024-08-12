@@ -1,0 +1,19 @@
+.table-fixed thead {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+}
+
+.table-fixed thead th {
+  position: sticky;
+  top: 124px;
+  position: -webkit-sticky;
+}
+
+.d-flex > * {
+  margin-left: 15px;
+}
+
+.d-flex > h5 {
+  margin-left: 0px;
+}

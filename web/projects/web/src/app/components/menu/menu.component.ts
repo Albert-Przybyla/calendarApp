@@ -3,11 +3,12 @@ import { ActivatedRoute, Router, RouterModule, Routes } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { ModalService } from '../../services/modal.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, NgbModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss', 'hamburger.scss'],
 })

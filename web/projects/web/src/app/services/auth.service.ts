@@ -63,9 +63,11 @@ export class AuthService {
       );
   }
 
-  public getUser(): string | null {
+  public getUser(): User | null {
     let token = localStorage.getItem(TOKEN_KEY);
-    if (this.isTokenValid(token!)) return token;
+    if (this.isTokenValid(token!)) {
+      return new User(token!);
+    }
     this.logout();
     return null;
   }

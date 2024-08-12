@@ -16,6 +16,30 @@
       <button class="btn menu-btn">
         <h4 class="bi bi-bell"></h4>
       </button>
+      <div
+        class="top-menu-button"
+        [ngbPopover]="popContent"
+        #user="ngbPopover"
+        [autoClose]="'outside'"
+      >
+        <span>{{ _auth.getUser()?.email }}</span>
+        <i class="bi bi-person-circle"></i>
+      </div>
     </div>
   </div>
 </nav>
+
+<ng-template #popContent>
+  <div class="d-flex flex-column">
+    <button
+      class="btn btn-ligh btn-lg btn-outline-primary mb-3"
+      (click)="changePassword()"
+    >
+      <i class="bi bi-shield-lock"></i> <span>Zmień hasło</span>
+    </button>
+    <button class="btn btn-ligh btn-lg btn-outline-danger" (click)="logout()">
+      <i class="bi bi-box-arrow-left"></i>
+      <span>Wyloguj się</span>
+    </button>
+  </div>
+</ng-template>

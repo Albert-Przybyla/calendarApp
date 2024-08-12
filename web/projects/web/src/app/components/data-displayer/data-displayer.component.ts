@@ -43,6 +43,8 @@ import { PAGE_SIZE } from '../../../constants';
   ],
 })
 export class DataDisplayerComponent {
+  @Input() totalPages: number = 1;
+  @Input() currentPage: number = 1;
   @Input() loading: boolean = true;
   @Input() pageSize: number = PAGE_SIZE;
   @Input() enableColapse: boolean = false;

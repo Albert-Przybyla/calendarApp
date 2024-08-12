@@ -1,12 +1,17 @@
 <div @slideIn class="p-3">
-  <app-data-displayer (pageChange)="getData()" [loading]="loading">
+  <app-data-displayer
+    (pageChange)="getData()"
+    [loading]="loading"
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+  >
     <span title>Punkty</span>
     <tr header>
       <th scope="col">#</th>
       <th scope="col">Nazwa</th>
     </tr>
     <ng-container body>
-      @for(event of data; track event; let i = $index) {
+      @for(event of items; track event; let i = $index) {
       <tr>
         <th>{{ i + 1 }}</th>
         <td>{{ event.name }}</td>

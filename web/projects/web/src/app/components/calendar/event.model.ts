@@ -1,4 +1,4 @@
-import { EventGet200ResponseInner } from '../../../../../api-client';
+import { EventGet200ResponseInner } from '../../../../../api-client/model/eventGet200ResponseInner';
 
 export class EventForCalendar {
   id: string;

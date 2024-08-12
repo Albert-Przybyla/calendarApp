@@ -57,6 +57,18 @@
               </tbody>
               }
             </table>
+            @if(!loading){
+            <div @fadeIn>
+              <ngb-pagination
+                class="d-flex justify-content-center"
+                [collectionSize]="totalPages || 1"
+                [(page)]="currentPage!"
+                [pageSize]="pageSize"
+                (pageChange)="pageChange.next($event)"
+              >
+              </ngb-pagination>
+            </div>
+            }
           </ng-template>
         </div>
       </div>

@@ -232,63 +232,31 @@ paths:
                   type: string
                   format: date-time
                   description: The end date and time for the range.
-      parameters:
-        - in: query
-          name: pageNumber
-          required: false
-          schema:
-            type: integer
-            default: 1
-          description: The page number to retrieve.
-        - in: query
-          name: pageSize
-          required: false
-          schema:
-            type: integer
-            default: 10
-          description: The number of items to retrieve per page.
       responses:
         200:
           description: Successfully retrieved the list of events within the date range.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  totalItems:
-                    type: integer
-                    description: The total number of events available.
-                  totalPages:
-                    type: integer
-                    description: The total number of pages available.
-                  currentPage:
-                    type: integer
-                    description: The current page number.
-                  events:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: The unique identifier of the event.
-                        name:
-                          type: string
-                          description: The name of the event.
-                        description:
-                          type: string
-                          description: The description of the event.
-                        start:
-                          type: string
-                          format: date-time
-                          description: The start date and time of the event.
-                        end:
-                          type: string
-                          format: date-time
-                          description: The end date and time of the event.
-                        calendarId:
-                          type: string
-                          description: The ID of the calendar to which the event belongs.
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The unique identifier of the typical event.
+                    name:
+                      type: string
+                      description: The name of the typical event.
+                    description:
+                      type: string
+                      description: The description of the typical event.
+                    duration:
+                      type: number
+                      description: The duration of the typical event in hours.
+                    calendarId:
+                      type: string
+                      description: The ID of the calendar to which the typical event belongs.
         403:
           description: Unauthorized. The user does not have the necessary permissions.
         500:

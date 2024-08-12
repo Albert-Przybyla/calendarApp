@@ -8,7 +8,6 @@ import {
   CalendarControllerClientService,
   CalendarGet200ResponseInner,
   EventControllerClientService,
-  EventGet200ResponseInner,
 } from '../../../../../api-client';
 import { EventFormComponent } from '../../forms/event-form/event-form.component';
 import { GetEvents } from './getEvents.model';

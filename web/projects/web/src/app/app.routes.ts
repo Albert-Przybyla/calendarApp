@@ -35,7 +35,7 @@ export const routes: Routes = [
         path: 'calendar',
         data: {
           label: 'Kalendarz',
-          icon: 'bi-tag',
+          icon: 'bi-calendar-event',
         },
         children: [
           {
@@ -48,7 +48,7 @@ export const routes: Routes = [
         path: 'typical-events',
         data: {
           label: 'Typowe wydarzenia',
-          icon: 'bi-tag',
+          icon: 'bi-star-fill',
         },
         children: [
           {
@@ -61,7 +61,7 @@ export const routes: Routes = [
         path: 'account',
         data: {
           label: 'Konto',
-          icon: 'bi-tag',
+          icon: 'bi-person-circle',
         },
         children: [
           {

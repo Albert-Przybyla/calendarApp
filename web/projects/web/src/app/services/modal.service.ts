@@ -1,57 +1,90 @@
-import {
-  ApplicationRef,
-  ComponentFactoryResolver,
-  ComponentRef,
-  Inject,
-  Injectable,
-  Injector,
-  TemplateRef,
-} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationModalComponent } from '../components/confirmation-modal/confirmation-modal.component';
 import { ModalComponent } from '../components/modal/modal.component';
-import { DOCUMENT } from '@angular/common';
-import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ModalService {
-  private modalNotifier?: Subject<ModalResponse>;
+  private modalService = inject(NgbModal);
+  closeResult = '';
+  header = '';
 
-  constructor(
-    private resolver: ComponentFactoryResolver,
-    private injector: Injector,
-    @Inject(DOCUMENT) private document: Document
-  ) {}
+  async open(
+    name: string,
+    content: any,
+    id?: any,
+    data?: any,
+    size?: string
+  ): Promise<any> {
+    try {
+      const modalRef = await this.modalService.open(ModalComponent, {
+        ariaLabelledBy: 'modal-basic-title',
+        size: size ? size : 'xl',
+        fullscreen: size === 'full' ? true : false,
+        scrollable: false,
+      });
 
-  open(content: any, data?: any, options?: any): Observable<ModalResponse> {
-    const modalFactory = this.resolver.resolveComponentFactory(ModalComponent);
-    const modalComponent = modalFactory.create(this.injector);
+      modalRef.componentInstance.content = content;
+      modalRef.componentInstance.id = id;
+      modalRef.componentInstance.data = data;
+      modalRef.componentInstance.name = name;
+      modalRef.componentInstance.modalRef = modalRef;
 
-    modalComponent.instance.size = options?.size;
-    modalComponent.instance.title = options?.title;
-    modalComponent.instance.data = data;
-    modalComponent.instance.content = content;
-    modalComponent.instance.closeEvent.subscribe(() => this.close());
-    modalComponent.instance.submitEvent.subscribe(() => this.submit());
-
-    modalComponent.hostView.detectChanges();
-    this.document.body.appendChild(modalComponent.location.nativeElement);
-    this.modalNotifier = new Subject();
-    return this.modalNotifier?.asObservable();
+      return modalRef.result.then(
+        (result) => {
+          return result;
+        },
+        (reason) => {
+          return false;
+        }
+      );
+    } catch (error) {
+      console.error('Błąd podczas otwierania modala:', error);
+      return false;
+    }
   }
 
-  close() {
-    this.modalNotifier?.next(ModalResponse.cancel);
-    this.modalNotifier?.complete();
+  close(v: boolean) {
+    this.modalService.dismissAll(v);
   }
 
-  submit() {
-    this.modalNotifier?.next(ModalResponse.confirm);
-    this.close();
+  async openConfirmationModal(text: string): Promise<boolean> {
+    try {
+      const modalRef = await this.modalService.open(
+        ConfirmationModalComponent,
+        {
+          ariaLabelledBy: 'modal-basic-title',
+          size: 'md',
+          scrollable: false,
+        }
+      );
+
+      modalRef.componentInstance.data = text;
+
+      return modalRef.result.then(
+        (result) => {
+          return result;
+        },
+        (reason) => {
+          return false;
+        }
+      );
+    } catch (error) {
+      console.error('Błąd podczas otwierania modala:', error);
+      return false;
+    }
   }
 }
 
-export enum ModalResponse {
-  cancel = 0,
-  confirm = 1,
+export interface ModalComponentView {
+  data?: any;
+  id?: any;
+}
+
+export interface ModalComponentView2 {
+  data?: any;
+  id?: any;
+  close: () => void;
 }

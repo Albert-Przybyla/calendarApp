@@ -1,37 +1,33 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ComponentFactoryResolver,
-  ElementRef,
-  EventEmitter,
   Input,
-  Output,
   ViewChild,
   ViewContainerRef,
   inject,
+  OnInit,
 } from '@angular/core';
+import {
+  ModalComponentView,
+  ModalComponentView2,
+} from '../../services/modal.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
+  selector: 'lib-modal',
   standalone: true,
-  imports: [CommonModule],
-  styleUrls: ['./modal.component.scss'],
+  imports: [],
+  templateUrl: './modal.component.html',
+  styleUrl: './modal.component.scss',
 })
-export class ModalComponent {
+export class ModalComponent implements OnInit {
+  private _modal = inject(NgbModal);
   private _resolver = inject(ComponentFactoryResolver);
-
-  @Input() title = 'Tytuł';
-  @Input() size = 'md';
-  @Input() id?: number = undefined;
-  @Input() data?: any = undefined;
   @Input() content: any;
-
-  @Output() closeEvent = new EventEmitter();
-  @Output() submitEvent = new EventEmitter();
-
-  constructor(private elementRef: ElementRef) {}
-
+  @Input() id: any;
+  @Input() data: any;
+  @Input() name: string;
+  @Input() modalRef: NgbModalRef;
   @ViewChild('dynamicContent', { read: ViewContainerRef, static: true })
   dynamicContent: ViewContainerRef;
 
@@ -42,25 +38,13 @@ export class ModalComponent {
       if (componentRef.instance) {
         (<ModalComponentView>componentRef.instance).id = this.id;
         (<ModalComponentView>componentRef.instance).data = this.data;
-        (<ModalComponentView>componentRef.instance).close = () => this.close();
+        (<ModalComponentView2>componentRef.instance).close =
+          this.close.bind(this);
       }
     }
   }
 
-  protected close() {
-    // this._modal.dismissAll();
-    this.elementRef.nativeElement.remove();
-    this.closeEvent.emit();
+  close(success?: any) {
+    this.modalRef.close(success);
   }
-
-  protected submit() {
-    this.elementRef.nativeElement.remove();
-    this.submitEvent.emit();
-  }
-}
-
-export interface ModalComponentView {
-  data?: any;
-  id?: any;
-  close: () => void;
 }

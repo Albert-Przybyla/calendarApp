@@ -11,7 +11,7 @@ import {
   EventControllerClientService,
   EventPostRequest,
 } from '../../../../../api-client';
-import { ModalComponentView } from '../../components/modal/modal.component';
+import { BaseModalComponent } from '../../base/baseModalComponent';
 
 @Component({
   selector: 'app-event-form',
@@ -20,30 +20,25 @@ import { ModalComponentView } from '../../components/modal/modal.component';
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule],
 })
-export class EventFormComponent implements OnInit, ModalComponentView {
+export class EventFormComponent extends BaseModalComponent {
   private fb = inject(FormBuilder);
   private eventControllerClientService = inject(EventControllerClientService);
-  @Input() public id?: number;
-  @Input() public data?: any;
-  @Input() public close: () => void;
 
-  constructor() {}
   i = 0;
 
-  protected form: FormGroup;
+  protected form: FormGroup = new FormGroup({
+    name: new FormControl(undefined, [Validators.required]),
+    description: new FormControl(undefined),
+    start: new FormControl(undefined, [Validators.required]),
+    startTime: new FormControl(undefined, [Validators.required]),
+    end: new FormControl(undefined, [Validators.required]),
+    endTime: new FormControl(undefined, [Validators.required]),
+    calendarId: new FormControl('665e028f8845397281847c40', [
+      Validators.required,
+    ]),
+  });
 
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      name: new FormControl(undefined, [Validators.required]),
-      description: new FormControl(undefined),
-      start: new FormControl(undefined, [Validators.required]),
-      startTime: new FormControl(undefined, [Validators.required]),
-      end: new FormControl(undefined, [Validators.required]),
-      endTime: new FormControl(undefined, [Validators.required]),
-      calendarId: new FormControl('665e028f8845397281847c40', [
-        Validators.required,
-      ]),
-    });
+  protected override onPatamsSet(): void {
     if (this.data && this.data['date']) {
       const d: Date = this.data['date'];
       this.form.patchValue({

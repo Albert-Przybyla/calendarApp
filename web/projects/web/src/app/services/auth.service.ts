@@ -9,12 +9,14 @@ import {
   AuthRefreshPostRequest,
 } from '../../../../api-client';
 import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private _auth = inject(AuthControllerClientService);
+  private _router = inject(Router);
 
   public loginUser(
     login: AuthLoginPostRequest,
@@ -85,5 +87,7 @@ export class AuthService {
     this.navigate();
   }
 
-  private navigate() {}
+  private navigate() {
+    this._router.navigate(['/login']);
+  }
 }

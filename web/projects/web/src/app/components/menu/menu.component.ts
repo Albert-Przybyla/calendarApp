@@ -37,7 +37,11 @@ export class MenuComponent {
 
   protected async logout() {
     this.user.toggle();
-    if (await this._modal.open('Czy na pewno chcesz się wylogować?')) {
+    if (
+      await this._modal.openConfirmationModal(
+        'Czy na pewno chcesz się wylogować?'
+      )
+    ) {
       this._auth.logout();
     }
   }

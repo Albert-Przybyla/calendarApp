@@ -1,0 +1,13 @@
+<div class="notifications-container">
+  @for (toast of toastService.toasts; track toast) {
+  <ngb-toast
+    [header]="toast.header"
+    [autohide]="true"
+    [delay]="toast.delay || 5000"
+    (hidden)="toastService.remove(toast)"
+    [class.bg-danger]="!toast.successful"
+    [class.bg-success]="toast.successful"
+    >{{ toast.body }}</ngb-toast
+  >
+  }
+</div>

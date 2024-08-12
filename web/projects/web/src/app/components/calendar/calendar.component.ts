@@ -38,18 +38,15 @@ export class CalendarComponent implements OnInit {
     this.getCalendars();
   }
 
-  protected createEvent(d?: Date) {
+  protected async createEvent(d?: Date) {
     if (d) d.setTimeFromDate(new Date());
-    this.modalService
-      .open(
-        EventFormComponent,
-        { date: d },
-        { title: 'Dodaj wydarzenie', size: 'lg' }
-      )
-      .subscribe((action) => {
-        if (action) {
-        }
-      });
+    await this.modalService.open(
+      'Dodaj wydarzenie',
+      EventFormComponent,
+      undefined,
+      { date: d },
+      'lg'
+    );
   }
 
   private getCalendars() {

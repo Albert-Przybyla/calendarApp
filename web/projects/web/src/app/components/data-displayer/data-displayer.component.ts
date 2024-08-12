@@ -1,14 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-} from '@angular/core';
-import { NgbDate, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { debounceTime, Subject } from 'rxjs';
 import {
   trigger,
   transition,
@@ -26,7 +19,6 @@ import { PAGE_SIZE } from '../../../constants';
   templateUrl: './data-displayer.component.html',
   styleUrl: './data-displayer.component.scss',
   animations: [
-    // the fade-in/fade-out animation.
     trigger('fadeOut', [
       transition(':leave', [
         query(':leave', animateChild(), { optional: true }),

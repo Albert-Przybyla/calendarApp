@@ -7,13 +7,14 @@ import {
 import { DataDisplayerComponent } from '../../../components/data-displayer/data-displayer.component';
 import { BaseDataComponent } from '../../../base/baseDataComponent';
 import { Observable } from 'rxjs';
+import { LoaderComponent } from '../../../components/loader/loader.component';
 
 @Component({
   selector: 'app-typical-events',
   templateUrl: './typical-events.component.html',
   styleUrls: ['./typical-events.component.scss'],
   standalone: true,
-  imports: [DataDisplayerComponent],
+  imports: [DataDisplayerComponent, LoaderComponent],
   animations: baseAnimations,
 })
 export class TypicalEventsComponent extends BaseDataComponent<EventByDatesPost200ResponseInner> {

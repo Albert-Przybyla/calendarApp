@@ -27,7 +27,7 @@ export class CalendarComponent implements OnInit {
   protected calendars: CalendarGet200ResponseInner[] = [];
   protected events: EventForCalendar[] = [];
   protected loading: boolean = true;
-  protected initLoading: boolean = true;
+  public initLoading: boolean = true;
 
   private calendarControllerClientService = inject(
     CalendarControllerClientService

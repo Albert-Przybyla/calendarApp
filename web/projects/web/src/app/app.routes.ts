@@ -3,9 +3,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { ApplicationComponent } from './pages/application/application.component';
 import { authGuard } from './guards/auth.guard';
 import { RegisterComponent } from './pages/register/register.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { TypicalEventsComponent } from './pages/application/typical-events/typical-events.component';
 import { AccountComponent } from './pages/application/account/account.component';
+import { CalendarComponent } from './pages/application/calendar/calendar.component';
 
 export const routes: Routes = [
   {

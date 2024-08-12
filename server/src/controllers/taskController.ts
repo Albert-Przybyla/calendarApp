@@ -1,4 +1,4 @@
-import { createTask, getTaskById, getTasksForUser } from "../db/task";
+import { countTasksForUser, createTask, getTaskById, getTasksForUserPaged } from "../db/task";
 import { Request, Response } from "express";
 
 export const createTaskReq = async (req: Request, res: Response) => {
@@ -52,12 +52,21 @@ export const updateTaskReq = async (req: Request, res: Response) => {
 
 export const getTasksForUserReq = async (req: Request, res: Response) => {
   try {
+    const { pageNumber, pageSize } = req.query;
+    const page = Number(pageNumber) || 1;
+    const size = Number(pageSize) || 10;
     const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
-    const Tasks = await getTasksForUser(currentUserId);
-    return res.status(200).json(Tasks);
+    const totalEvents = await countTasksForUser(currentUserId);
+    const maxPage = Math.ceil(totalEvents / size);
+    const Tasks = await getTasksForUserPaged(currentUserId, page, size);
+    return res.status(200).json({
+      pageNumber: page,
+      maxPage: maxPage,
+      items: Tasks,
+    });
   } catch (err) {
     console.error(err);
     return res.sendStatus(400);

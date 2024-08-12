@@ -56,30 +56,54 @@ paths:
       tags:
         - Task controller
       summary: Retrieve tasks for the authenticated user
-      description: Retrieve a list of all tasks for the authenticated user.
+      description: Retrieve a paginated list of tasks for the authenticated user.
+      parameters:
+        - in: query
+          name: pageNumber
+          required: false
+          schema:
+            type: integer
+            default: 1
+          description: The page number to retrieve.
+        - in: query
+          name: pageSize
+          required: false
+          schema:
+            type: integer
+            default: 10
+          description: The number of tasks per page.
       responses:
         200:
           description: Successfully retrieved the list of tasks.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                      description: The unique identifier of the task.
-                    name:
-                      type: string
-                      description: The name of the task.
-                    description:
-                      type: string
-                      description: The description of the task.
-                    date:
-                      type: string
-                      format: date
-                      description: The date and time of the task.
+                type: object
+                properties:
+                  pageNumber:
+                    type: integer
+                    description: The current page number.
+                  maxPage:
+                    type: integer
+                    description: The maximum number of pages available.
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: The unique identifier of the task.
+                        name:
+                          type: string
+                          description: The name of the task.
+                        description:
+                          type: string
+                          description: The description of the task.
+                        date:
+                          type: string
+                          format: date
+                          description: The date and time of the task.
         403:
           description: Unauthorized. The user does not have the necessary permissions.
         400:

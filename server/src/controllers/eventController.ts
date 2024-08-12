@@ -1,4 +1,10 @@
-import { createEvent, getEventById, getEventsForUser, getEventsForUserbyDates } from "../db/event";
+import {
+  countEventsForUser,
+  createEvent,
+  getEventById,
+  getEventsForUserPaged,
+  getEventsForUserbyDates,
+} from "../db/event";
 import { Request, Response } from "express";
 
 export const createEventReq = async (req: Request, res: Response) => {
@@ -60,12 +66,21 @@ export const updateEventReq = async (req: Request, res: Response) => {
 
 export const getEventsForUserReq = async (req: Request, res: Response) => {
   try {
+    const { pageNumber, pageSize } = req.query;
+    const page = Number(pageNumber) || 1;
+    const size = Number(pageSize) || 10;
     const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
-    const Events = await getEventsForUser(currentUserId);
-    return res.status(200).json(Events);
+    const totalEvents = await countEventsForUser(currentUserId);
+    const maxPage = Math.ceil(totalEvents / size);
+    const Events = await getEventsForUserPaged(currentUserId, page, size);
+    return res.status(200).json({
+      pageNumber: page,
+      maxPage: maxPage,
+      items: Events,
+    });
   } catch (err) {
     console.error(err);
     return res.sendStatus(400);

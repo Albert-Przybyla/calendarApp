@@ -1,4 +1,4 @@
-import { createTaskReq, getTasksForUserReq, updateTaskReq } from "controllers/taskController";
+import { createTaskReq, getTasksForUserReq, updateTaskReq } from "../controllers/taskController";
 import { isAuthenticated } from "../middlewares";
 import express from "express";
 

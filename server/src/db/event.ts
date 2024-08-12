@@ -44,6 +44,14 @@ export const createEvent = (values: Record<string, any>) =>
   new EventModule(values).save().then((event) => event.toObject());
 
 export const getEventsForUser = (userId: String) => EventModule.find({ ownerId: userId });
+
+export const getEventsForUserPaged = (userId: String, pageNumber: number = 1, pageSize: number = 10) => {
+  const skip = (pageNumber - 1) * pageSize;
+  return EventModule.find({ ownerId: userId }).skip(skip).limit(pageSize).exec();
+};
+
+export const countEventsForUser = (userId: String) => EventModule.countDocuments({ ownerId: userId });
+
 export const getEventById = (id: string) => EventModule.findById(id);
 export const getEventsForUserbyDates = (userId: String, regStart: Date, reqEnd: Date) => {
   return EventModule.find({

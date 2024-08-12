@@ -1,4 +1,10 @@
-import { createTypicalEvent, getTypicalEventById, getTypicalEventsForUser } from "../db/typical_event";
+import {
+  countTypicalEventsForUser,
+  createTypicalEvent,
+  getTypicalEventById,
+  getTypicalEventsForUser,
+  getTypicalEventsForUserPaged,
+} from "../db/typical_event";
 import { Request, Response } from "express";
 import { get } from "lodash";
 
@@ -55,12 +61,21 @@ export const updateTypicalEventReq = async (req: Request, res: Response) => {
 
 export const getTypicalEventsForUserReq = async (req: Request, res: Response) => {
   try {
+    const { pageNumber, pageSize } = req.query;
+    const page = Number(pageNumber) || 1;
+    const size = Number(pageSize) || 10;
     const currentUserId = req.user?.id;
     if (!currentUserId) {
       return res.sendStatus(403);
     }
-    const typicalEvents = await getTypicalEventsForUser(currentUserId);
-    return res.status(200).json(typicalEvents);
+    const totalEvents = await countTypicalEventsForUser(currentUserId);
+    const maxPage = Math.ceil(totalEvents / size);
+    const typicalEvents = await getTypicalEventsForUserPaged(currentUserId, page, size);
+    return res.status(200).json({
+      pageNumber: page,
+      maxPage: maxPage,
+      items: typicalEvents,
+    });
   } catch (err) {
     console.error(err);
     return res.sendStatus(400);

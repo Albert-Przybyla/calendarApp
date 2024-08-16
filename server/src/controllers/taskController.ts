@@ -15,9 +15,10 @@ export const createTaskReq = async (req: Request, res: Response) => {
       name,
       description,
       date,
+      done: false,
       ownerId: currentUserId,
     });
-    return res.status(200).json(Event).end();
+    return res.status(200).json(Task).end();
   } catch (err) {
     console.error(err);
     return res.sendStatus(400);
@@ -27,7 +28,7 @@ export const createTaskReq = async (req: Request, res: Response) => {
 export const updateTaskReq = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { name, description, date } = req.body;
+    const { name, description, date, done } = req.body;
     if (!name || !date) {
       return res.sendStatus(400);
     }
@@ -42,6 +43,7 @@ export const updateTaskReq = async (req: Request, res: Response) => {
     Task.name = name;
     Task.description = description;
     Task.date = date;
+    Task.done = done;
     await Task.save();
     return res.status(200).json(Task).end();
   } catch (err) {
@@ -52,7 +54,7 @@ export const updateTaskReq = async (req: Request, res: Response) => {
 
 export const getTasksForUserReq = async (req: Request, res: Response) => {
   try {
-    const { pageNumber, pageSize } = req.query;
+    const { pageNumber, pageSize, date } = req.query;
     const page = Number(pageNumber) || 1;
     const size = Number(pageSize) || 10;
     const currentUserId = req.user?.id;
@@ -61,7 +63,12 @@ export const getTasksForUserReq = async (req: Request, res: Response) => {
     }
     const totalEvents = await countTasksForUser(currentUserId);
     const maxPage = Math.ceil(totalEvents / size);
-    const Tasks = await getTasksForUserPaged(currentUserId, page, size);
+    const Tasks = await getTasksForUserPaged(
+      currentUserId,
+      page,
+      size,
+      date ? new Date(String(date)) : undefined
+    );
     return res.status(200).json({
       pageNumber: page,
       maxPage: maxPage,

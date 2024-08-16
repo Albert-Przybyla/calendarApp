@@ -72,6 +72,13 @@ paths:
             type: integer
             default: 10
           description: The number of tasks per page.
+        - in: query
+          name: date
+          required: false
+          schema:
+            type: string
+            default: "2024-01-01"
+          description: The date of typical events.
       responses:
         200:
           description: Successfully retrieved the list of tasks.

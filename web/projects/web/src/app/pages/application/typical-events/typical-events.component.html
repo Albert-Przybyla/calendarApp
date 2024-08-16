@@ -1,6 +1,6 @@
 <div @slideIn class="p-3">
   <app-data-displayer
-    (pageChange)="getData()"
+    (pageChange)="getData($event)"
     [loading]="loading"
     [currentPage]="currentPage"
     [totalPages]="totalPages"

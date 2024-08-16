@@ -47,6 +47,9 @@ paths:
                     type: string
                     format: date
                     description: The date and time of the task.
+                  done:
+                    type: boolean
+                    description: The status of the task.
         403:
           description: Unauthorized. The user does not have the necessary permissions.
         400:
@@ -107,6 +110,9 @@ paths:
                         description:
                           type: string
                           description: The description of the task.
+                        done:
+                          type: boolean
+                          description: The status of the task.
                         date:
                           type: string
                           format: date
@@ -150,6 +156,9 @@ paths:
                   type: string
                   format: date
                   description: The date and time of the task.
+                done:
+                  type: boolean
+                  description: The status of the task.
       responses:
         200:
           description: Successfully updated the task.
@@ -171,6 +180,9 @@ paths:
                     type: string
                     format: date
                     description: The date and time of the task.
+                  done:
+                    type: boolean
+                    description: The status of the task.
         403:
           description: Unauthorized. The user does not have the necessary permissions.
         400:

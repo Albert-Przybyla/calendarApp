@@ -6,6 +6,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { TypicalEventsComponent } from './pages/application/typical-events/typical-events.component';
 import { AccountComponent } from './pages/application/account/account.component';
 import { CalendarComponent } from './pages/application/calendar/calendar.component';
+import { TasksComponent } from './pages/application/tasks/tasks.component';
 
 export const routes: Routes = [
   {
@@ -41,6 +42,19 @@ export const routes: Routes = [
           {
             path: '',
             component: CalendarComponent,
+          },
+        ],
+      },
+      {
+        path: 'tasks',
+        data: {
+          label: 'Zadania',
+          icon: 'bi-list-check',
+        },
+        children: [
+          {
+            path: '',
+            component: TasksComponent,
           },
         ],
       },

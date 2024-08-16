@@ -38,3 +38,5 @@ export const countTypicalEventsForUser = (userId: String) =>
   TypicalEventModule.countDocuments({ ownerId: userId });
 
 export const getTypicalEventById = (id: string) => TypicalEventModule.findById(id);
+
+export const deleteTypicalEventById = (id: string) => TypicalEventModule.findByIdAndDelete({ _id: id });

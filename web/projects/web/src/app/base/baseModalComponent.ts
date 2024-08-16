@@ -33,16 +33,18 @@ export abstract class BaseModalComponent
 
   protected abstract form: FormGroup;
 
-  protected onPatamsSet?(): any;
+  protected onParamsSet?(): any;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.id) this.formInEditMode = true;
-    if (this.onPatamsSet) this.onPatamsSet();
+    if (this.data) this.form.patchValue(this.data);
+    if (this.onParamsSet) this.onParamsSet();
   }
 
   ngOnInit(): void {
     if (this.id) this.formInEditMode = true;
-    if (this.onPatamsSet) this.onPatamsSet();
+    if (this.data) this.form.patchValue(this.data);
+    if (this.onParamsSet) this.onParamsSet();
   }
 
   public isControlValid(control: string): boolean {

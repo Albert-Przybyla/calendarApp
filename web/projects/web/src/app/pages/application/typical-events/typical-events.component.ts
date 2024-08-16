@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { baseAnimations } from '../../../base/baseAnimations';
 import {
   EventByDatesPost200ResponseInner,
@@ -8,6 +8,7 @@ import { DataDisplayerComponent } from '../../../components/data-displayer/data-
 import { BaseDataComponent } from '../../../base/baseDataComponent';
 import { Observable } from 'rxjs';
 import { LoaderComponent } from '../../../components/loader/loader.component';
+import { TypicalEventFormComponent } from '../../../forms/typical-event-form/typical-event-form.component';
 
 @Component({
   selector: 'app-typical-events',
@@ -27,5 +28,34 @@ export class TypicalEventsComponent extends BaseDataComponent<EventByDatesPost20
       this.currentPage,
       this.pageSize
     );
+  }
+
+  async onBtn(id?: string, el?: any) {
+    if (
+      await this._modal.open(
+        id ? 'Edytuj domyślne wydarzenie' : 'Dodaj domyślne wydarzenie',
+        TypicalEventFormComponent,
+        id,
+        el
+      )
+    ) {
+      this.getData(1);
+    }
+  }
+
+  async onDelete(id: string) {
+    if (
+      await this._modal.openConfirmationModal(
+        'Czy na pewno chcesz usun domyślne wydarzenie'
+      )
+    ) {
+      this._typicalEventControllerClientService
+        .typicalEventIdDelete(id)
+        .subscribe({
+          error: (e) => this._toast.onError(e),
+          next: (v) => this._toast.show('Pomyslnie usunięto', ''),
+          complete: () => this.getData(1),
+        });
+    }
   }
 }

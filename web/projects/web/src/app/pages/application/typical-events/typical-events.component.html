@@ -5,16 +5,24 @@
     [currentPage]="currentPage"
     [totalPages]="totalPages"
   >
-    <span title>Punkty</span>
+    <span title>Domyślne wydarzenia</span>
+    <span buttons>
+      <button class="btn" (click)="onBtn()">Dodaj</button>
+    </span>
     <tr header>
       <th scope="col">#</th>
       <th scope="col">Nazwa</th>
+      <th scope="col"></th>
     </tr>
     <ng-container body>
       @for(event of items; track event; let i = $index) {
       <tr>
         <th>{{ i + 1 }}</th>
         <td>{{ event.name }}</td>
+        <td>
+          <i class="bi bi-pencil-square" (click)="onBtn(event.id, event)"></i>
+          <i class="bi bi-trash" (click)="onDelete(event.id!)"></i>
+        </td>
       </tr>
       }@empty {
       <tr>

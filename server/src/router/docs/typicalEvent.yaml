@@ -180,3 +180,33 @@ paths:
           description: Unauthorized. The user does not have the necessary permissions.
         500:
           description: Server error. An error occurred on the server.
+
+    delete:
+      tags:
+        - Typical Event controller
+      summary: Delete a typical event
+      description: Delete an existing typical event by ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            description: The ID of the typical event to delete.
+      responses:
+        200:
+          description: Successfully deleted the typical event.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: A message confirming the deletion of the typical event.
+        404:
+          description: Not found. The specified typical event ID does not exist.
+        403:
+          description: Unauthorized. The user does not have the necessary permissions.
+        500:
+          description: Server error. An error occurred on the server.

@@ -21,10 +21,7 @@ import { BaseModalComponent } from '../../base/baseModalComponent';
   imports: [ReactiveFormsModule, FormsModule],
 })
 export class EventFormComponent extends BaseModalComponent {
-  private fb = inject(FormBuilder);
   private eventControllerClientService = inject(EventControllerClientService);
-
-  i = 0;
 
   protected form: FormGroup = new FormGroup({
     name: new FormControl(undefined, [Validators.required]),
@@ -38,7 +35,7 @@ export class EventFormComponent extends BaseModalComponent {
     ]),
   });
 
-  protected override onPatamsSet(): void {
+  protected override onParamsSet(): void {
     if (this.data && this.data['date']) {
       const d: Date = this.data['date'];
       this.form.patchValue({

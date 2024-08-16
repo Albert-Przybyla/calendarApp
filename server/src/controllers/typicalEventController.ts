@@ -3,6 +3,7 @@ import {
   createTypicalEvent,
   getTypicalEventById,
   getTypicalEventsForUser,
+  deleteTypicalEventById,
   getTypicalEventsForUserPaged,
 } from "../db/typical_event";
 import { Request, Response } from "express";
@@ -53,6 +54,26 @@ export const updateTypicalEventReq = async (req: Request, res: Response) => {
     typicalEvent.calendarId = calendarId;
     await typicalEvent.save();
     return res.status(200).json(typicalEvent).end();
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(400);
+  }
+};
+
+export const deleteTypicalEventReq = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const currentUserId = req.user?.id;
+    if (!currentUserId) {
+      return res.sendStatus(403);
+    }
+    const typicalEvent = await getTypicalEventById(id);
+    if (typicalEvent.ownerId !== currentUserId) {
+      return res.sendStatus(404);
+    }
+    const status = await deleteTypicalEventById(id);
+
+    return res.status(200).json(status).end();
   } catch (err) {
     console.error(err);
     return res.sendStatus(400);

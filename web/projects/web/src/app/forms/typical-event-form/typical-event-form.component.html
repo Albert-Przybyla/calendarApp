@@ -1,0 +1,37 @@
+<form [formGroup]="form" class="p-3" (ngSubmit)="onSubmit()">
+  <div class="form-floating mb-3">
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      placeholder=""
+      formControlName="name"
+    />
+    <label for="name">Tytuł</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <textarea
+      class="form-control"
+      id="description"
+      rows="3"
+      placeholder=""
+      formControlName="description"
+    ></textarea>
+    <label for="description">Opis</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input
+      type="anumber"
+      class="form-control"
+      id="duration"
+      placeholder=""
+      formControlName="duration"
+    />
+    <label for="duration">Czsa trwania</label>
+  </div>
+  <div class="p-3">
+    <button type="submit" class="btn">Zapisz</button>
+  </div>
+</form>

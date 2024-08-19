@@ -1,6 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BaseDataComponent } from '../../../base/baseDataComponent';
 import {
+  trigger,
+  transition,
+  style,
+  animate,
+  animateChild,
+  query,
+} from '@angular/animations';
+import {
   TaskControllerClientService,
   TaskGet200ResponseItemsInner,
 } from '../../../../../../api-client';
@@ -15,7 +23,22 @@ import { baseAnimations } from '../../../base/baseAnimations';
   styleUrls: ['./tasks.component.scss'],
   imports: [NgbPagination],
   standalone: true,
-  animations: baseAnimations,
+  animations: [
+    baseAnimations,
+    trigger('fadeOut', [
+      transition(':leave', [
+        query(':leave', animateChild(), { optional: true }),
+        animate('200ms ease-in', style({ opacity: 0 })),
+      ]),
+    ]),
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        query(':enter', animateChild(), { optional: true }),
+        animate('250ms 200ms ease-out', style({ opacity: 1 })),
+      ]),
+    ]),
+  ],
 })
 export class TasksComponent extends BaseDataComponent<TaskGet200ResponseItemsInner> {
   private _taskControllerClientService = inject(TaskControllerClientService);

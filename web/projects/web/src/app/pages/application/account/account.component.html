@@ -4,7 +4,7 @@
       <div class="card-title d-flex justify-content-between mb-5">
         <h5>Konto</h5>
       </div>
-      <div>
+      <div class="mb-5">
         <div class="card-title d-flex justify-content-between">
           <h6>Konfiguracja SMTP:</h6>
           <div class="buttons">
@@ -61,6 +61,30 @@
           </li>
         </ul>
         }
+      </div>
+
+      <div>
+        <div class="card-title d-flex justify-content-between">
+          <h6>Dane użytkownika:</h6>
+        </div>
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-start"
+          >
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Nazwa użytkownika:</div>
+              {{ _auth.getUser()?.username || "---" }}
+            </div>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between align-items-start"
+          >
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Adres e-mail:</div>
+              {{ _auth.getUser()?.email || "---" }}
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

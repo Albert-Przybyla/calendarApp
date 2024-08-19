@@ -7,6 +7,7 @@ import {
 import { ModalService } from '../../../services/modal.service';
 import { SmtpConfigurationFormComponent } from '../../../forms/smtp-configuration-form/smtp-configuration-form.component';
 import { LoaderComponent } from '../../../components/loader/loader.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-account',
@@ -20,6 +21,7 @@ export class AccountComponent implements OnInit {
   private _SMTPConfigurationControllerClientService = inject(
     SMTPConfigurationControllerClientService
   );
+  protected _auth = inject(AuthService);
 
   private _modal = inject(ModalService);
 

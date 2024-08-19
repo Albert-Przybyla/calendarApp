@@ -8,6 +8,6 @@ import express from "express";
 
 export default (router: express.Router) => {
   router.post("/smtp-config", isAuthenticated, createSmtpConfigReq);
-  router.get("/smtp-configt", isAuthenticated, getSmtpConfigForUserReq);
+  router.get("/smtp-config", isAuthenticated, getSmtpConfigForUserReq);
   router.put("/smtp-config/:id", isAuthenticated, updateSmtpConfigReq);
 };

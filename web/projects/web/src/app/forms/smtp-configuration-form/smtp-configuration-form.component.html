@@ -1,0 +1,55 @@
+<form [formGroup]="form" class="p-3" (ngSubmit)="onSubmit()">
+  <div class="form-floating mb-3">
+    <input
+      type="text"
+      class="form-control"
+      id="host"
+      placeholder=""
+      formControlName="host"
+    />
+    <label for="host">Adres serwera</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input
+      type="text"
+      class="form-control"
+      id="port"
+      placeholder=""
+      formControlName="port"
+    />
+    <label for="port">Port</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input
+      type="text"
+      class="form-control"
+      id="secure"
+      placeholder=""
+      formControlName="secure"
+    />
+    <label for="secure">Zabezpieczone</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input
+      type="text"
+      class="form-control"
+      id="user"
+      placeholder=""
+      formControlName="user"
+    />
+    <label for="user">Użytkownik</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input
+      type="text"
+      class="form-control"
+      id="password"
+      placeholder=""
+      formControlName="password"
+    />
+    <label for="password">Hasło</label>
+  </div>
+  <div class="p-3">
+    <button type="submit" class="btn">Zapisz</button>
+  </div>
+</form>

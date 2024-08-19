@@ -25,5 +25,5 @@ export const SmtpConfigModule = mongoose.model("SmtpConfig", SmtpConfigSchema);
 export const createSmtpConfig = (values: Record<string, any>) =>
   new SmtpConfigModule(values).save().then((SmtpConfig) => SmtpConfig.toObject());
 
-export const getSmtpConfigForUser = (userId: String) => SmtpConfigModule.find({ ownerId: userId });
+export const getSmtpConfigForUser = (userId: String) => SmtpConfigModule.findOne({ ownerId: userId });
 export const getSmtpConfigById = (id: string) => SmtpConfigModule.findById(id);

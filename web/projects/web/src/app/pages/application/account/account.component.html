@@ -1,1 +1,68 @@
-<div @slideIn class="p-3"><p>account works!</p></div>
+<div @slideIn class="p-3">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title d-flex justify-content-between mb-5">
+        <h5>Konto</h5>
+      </div>
+      <div>
+        <div class="card-title d-flex justify-content-between">
+          <h6>Konfiguracja SMTP:</h6>
+          <div class="buttons">
+            <button
+              class="btn btn-sm btn-outline-primary me-2"
+              (click)="openSmtpConfigModal()"
+            >
+              {{ smtpConfig ? "Edytuj" : "Dodaj" }}
+            </button>
+          </div>
+        </div>
+        @if(smtpConfig){
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-start"
+          >
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Serwer:</div>
+              {{ smtpConfig.host }}
+            </div>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between align-items-start"
+          >
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Port:</div>
+              {{ smtpConfig.port }}
+            </div>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between align-items-start"
+          >
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Zabezpieczone:</div>
+              <div class="checkbox disabled">
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    disabled
+                    [checked]="smtpConfig.secure"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </li>
+        </ul>
+        }@else {
+        <ul class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-start"
+          >
+            <div class="ms-2 me-auto">Brak konfiguracji SMTP!</div>
+          </li>
+        </ul>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+<app-loader [show]="loading"></app-loader>
